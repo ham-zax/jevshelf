@@ -2,11 +2,11 @@ from __future__ import annotations
 
 import argparse
 import hashlib
-import shutil
 import json
 import os
 import time
 from contextlib import contextmanager
+from importlib import resources as _resources
 from pathlib import Path, PureWindowsPath
 from typing import Iterator
 
@@ -24,13 +24,19 @@ def _config_file() -> Path:
     return Path(os.environ.get("JEVSHELF_CONFIG", "~/.config/jevshelf/collections.json")).expanduser().absolute()
 
 
+def _reject_constant(value: str) -> None:
+    raise ValueError(f"Invalid JSON constant {value}")
+
+
 def _specs() -> dict:
     """Read only the user's explicit collection manifest."""
     path = _config_file()
     if not path.is_file():
         return {}
     try:
-        value = json.loads(path.read_text(encoding="utf-8"))
+        value = json.loads(path.read_text(encoding="utf-8"), parse_constant=_reject_constant)
+        if not isinstance(value, dict):
+            raise ValueError("Top-level JSON must be an object")
         collections = value.get("collections", {})
         if not isinstance(collections, dict) or any(
             not isinstance(name, str) or not isinstance(spec, dict)
@@ -45,7 +51,43 @@ def _specs() -> dict:
         raise RouterError(f"Invalid JevShelf configuration at {path}: {exc}") from exc
 
 
+def _demo_root(raw: str) -> Path:
+    """Resolve an @demo/ path against demo assets shipped inside the package.
+
+    This is independent of the source checkout and the working directory, so
+    ordinary wheel installations can serve the demo collection. The local
+    catalog still validates the resolved directory before indexing it.
+    """
+    rest = "" if raw == "@demo" else raw[len("@demo/"):]
+    if "\\" in rest or Path(rest).is_absolute() or ".." in Path(rest).parts:
+        raise RouterError(f"Invalid demo path {raw!r}")
+    try:
+        base = _resources.files("jevshelf") / "demo"
+        with _resources.as_file(base) as demo_dir:
+            return (demo_dir / rest).absolute()
+    except RouterError:
+        raise
+    except Exception as exc:
+        raise RouterError(f"Demo assets are unavailable: {exc}") from exc
+
+
+def _demo_template() -> str:
+    """Read the packaged demo manifest, independent of the checkout."""
+    try:
+        text = (_resources.files("jevshelf") / "demo" / "collections.json").read_text(encoding="utf-8")
+    except RouterError:
+        raise
+    except Exception as exc:
+        raise RouterError(f"Demo assets are unavailable: {exc}") from exc
+    value = json.loads(text)
+    if not isinstance(value, dict) or "writing" not in value.get("collections", {}):
+        raise RouterError("Demo assets are unavailable")
+    return text
+
+
 def _root_path(raw: str) -> Path:
+    if raw == "@demo" or raw.startswith("@demo/"):
+        return _demo_root(raw)
     if raw.startswith("@repo/"):
         return (Path(__file__).resolve().parents[2] / raw[6:]).absolute()
     if raw.startswith("~/") or raw.startswith("/"):
@@ -62,8 +104,7 @@ def _init_config() -> dict:
     if target.exists():
         return {"status": "exists", "config": str(target), "collections": list(_specs())}
     target.parent.mkdir(parents=True, exist_ok=True)
-    sample = Path(__file__).resolve().parents[2] / "examples" / "collections.json"
-    shutil.copyfile(sample, target)
+    target.write_text(_demo_template(), encoding="utf-8")
     return {"status": "created", "config": str(target), "collections": list(_specs())}
 
 
@@ -195,6 +236,8 @@ def _jev_search(name: str, task: str, context: str, max_results: int) -> dict:
     )
     try:
         router.catalog.refresh()
+        if not router.catalog.skills:
+            raise RouterError("No valid skills found; check roots and warnings")
         state = router._state(task, context)
         with _mapped_api_key():
             result = router._live(state, budget)
@@ -229,6 +272,7 @@ def _jev_search(name: str, task: str, context: str, max_results: int) -> dict:
             "status": "error",
             "selected": [],
             "error": str(exc),
+            "warnings": list(router.catalog.warnings),
             "catalog_size": len(router.catalog.skills),
             "elapsed_seconds": round(time.perf_counter() - started, 6),
             **_client_metrics(router, budget),
@@ -263,7 +307,9 @@ def _load(args: argparse.Namespace) -> dict:
 
 def _load_resource(args: argparse.Namespace) -> dict:
     """Read explicitly allowed repository-level resources without directory escape."""
-    spec = _specs()[args.collection]
+    spec = _specs().get(args.collection)
+    if spec is None:
+        raise RouterError(f"Unknown collection '{args.collection}'; configure it in {_config_file()}")
     raw_root = spec.get("resources_root")
     allowed = spec.get("resources_allowlist")
     if not isinstance(raw_root, str) or not isinstance(allowed, list) or not allowed:
@@ -331,20 +377,22 @@ def _plan(args: argparse.Namespace) -> dict:
 
 
 def _parser() -> argparse.ArgumentParser:
+    # Parser construction must not read the user manifest: collection names
+    # are validated after parsing so --help stays usable with a broken config.
     parser = argparse.ArgumentParser(prog="jevshelf")
     commands = parser.add_subparsers(dest="command", required=True)
     commands.add_parser("collections", help="List configured collections and skill counts")
     commands.add_parser("init", help="Create an example collection config in your home directory")
 
     search = commands.add_parser("search", help="Search one collection without loading skill bodies")
-    search.add_argument("--collection", choices=_collection_names(), required=True)
+    search.add_argument("--collection", required=True)
     search.add_argument("--mode", choices=("lexical", "jev"), required=True)
     search.add_argument("--task", required=True)
     search.add_argument("--context", default="")
     search.add_argument("--max-results", type=int, default=3)
 
     load = commands.add_parser("load", help="Read a bounded page from one skill")
-    load.add_argument("--collection", choices=_collection_names(), required=True)
+    load.add_argument("--collection", required=True)
     load.add_argument("--id", required=True)
     load.add_argument("--file", default="SKILL.md")
     load.add_argument("--offset", type=int, default=0)
@@ -354,22 +402,29 @@ def _parser() -> argparse.ArgumentParser:
     resource = commands.add_parser(
         "load-resource", help="Read an explicitly configured, bounded repository-level reference"
     )
-    resource.add_argument("--collection", choices=_collection_names(), required=True)
+    resource.add_argument("--collection", required=True)
     resource.add_argument("--file", required=True)
     resource.add_argument("--offset", type=int, default=0)
     resource.add_argument("--limit", type=int, default=12000)
     resource.add_argument("--expected-digest")
 
     plan = commands.add_parser("plan", help="Plan a Jev request without authentication or network access")
-    plan.add_argument("--collection", choices=_collection_names(), required=True)
+    plan.add_argument("--collection", required=True)
     plan.add_argument("--task", required=True)
     plan.add_argument("--context", default="")
     return parser
 
 
+def _require_collection(args: argparse.Namespace) -> None:
+    if args.command in ("search", "load", "load-resource", "plan"):
+        if args.collection not in _specs():
+            raise RouterError(f"Unknown collection '{args.collection}'; configure it in {_config_file()}")
+
+
 def main(argv: list[str] | None = None) -> int:
     args = _parser().parse_args(argv)
     try:
+        _require_collection(args)
         if args.command == "init":
             _json(_init_config())
             return 0

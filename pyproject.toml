@@ -19,5 +19,12 @@ jevshelf = "jevshelf.cli:main"
 [tool.setuptools.packages.find]
 where = ["src"]
 
+[tool.setuptools.package-data]
+jevshelf = [
+  "demo/collections.json",
+  "demo/skills/refine-writing/SKILL.md",
+  "demo/skills/summarize-notes/SKILL.md",
+]
+
 [tool.pytest.ini_options]
 testpaths = ["tests"]

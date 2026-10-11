@@ -414,3 +414,254 @@ def test_no_implicit_user_collections_and_first_time_init(tmp_path, monkeypatch,
     assert code == 0 and result["status"] == "created"
     code, after = invoke(capsys, ["collections"])
     assert code == 0 and after["collections"]["writing"]["skills"] == 2
+
+
+@pytest.mark.parametrize("payload", [
+    "{invalid",
+    "[]",
+    "null",
+    "NaN",
+    '{"collections": []}',
+    '{"collections": null}',
+    '{"collections": {"demo": {"roots": []}}}',
+    '{"collections": {"demo": 7}}',
+])
+def test_malformed_manifest_is_safe_json_error(tmp_path, monkeypatch, capsys, payload):
+    manifest = Path(os.environ["JEVSHELF_CONFIG"])
+    manifest.write_text(payload)
+    code, result = invoke(capsys, ["collections"])
+    assert code == 2
+    assert result["status"] == "error"
+    assert "Invalid JevShelf configuration" in result["error"]
+    code, result = invoke(
+        capsys,
+        ["search", "--collection", "anything", "--mode", "lexical", "--task", "hi"],
+    )
+    assert code == 2
+    assert result["status"] == "error"
+    assert "Invalid JevShelf configuration" in result["error"]
+
+
+def test_repo_roots_stay_compatible(tmp_path, monkeypatch, capsys):
+    manifest = Path(os.environ["JEVSHELF_CONFIG"])
+    manifest.write_text(json.dumps({"collections": {"demo": {"roots": ["@repo/examples/skills"]}}}))
+    code, result = invoke(capsys, ["collections"])
+    assert code == 0
+    assert result["collections"]["demo"]["skills"] == 2
+
+
+def test_unreadable_manifest_is_safe_json_error(tmp_path, monkeypatch, capsys):
+    manifest = Path(os.environ["JEVSHELF_CONFIG"])
+    manifest.write_text(json.dumps({"collections": {}}))
+    manifest.chmod(0o000)
+    try:
+        try:
+            manifest.read_text()
+        except OSError:
+            pass
+        else:
+            pytest.skip("manifest remains readable under this user")
+        code, result = invoke(capsys, ["collections"])
+        assert code == 2
+        assert result["status"] == "error"
+        assert "Invalid JevShelf configuration" in result["error"]
+    finally:
+        manifest.chmod(0o600)
+
+
+def test_init_never_overwrites_invalid_config(tmp_path, monkeypatch, capsys):
+    manifest = Path(os.environ["JEVSHELF_CONFIG"])
+    manifest.write_text("{invalid")
+    code, result = invoke(capsys, ["init"])
+    assert code == 2
+    assert result["status"] == "error"
+    assert manifest.read_text() == "{invalid"
+
+
+def test_init_reports_existing_config_without_changes(tmp_path, monkeypatch, capsys):
+    root = tmp_path / "skills"
+    write_skill(root, "s", "s", "Do things.", "Body.")
+    configure_collection("custom", [root])
+    code, result = invoke(capsys, ["init"])
+    assert code == 0
+    assert result["status"] == "exists"
+    assert result["collections"] == ["custom"]
+
+
+def test_unknown_collection_is_rejected_as_json_error(tmp_path, monkeypatch, capsys):
+    configure_collection("marketing", [tmp_path / "marketing"])
+    cases = [
+        ["search", "--collection", "nope", "--mode", "lexical", "--task", "hi"],
+        ["load", "--collection", "nope", "--id", "whatever"],
+        ["load-resource", "--collection", "nope", "--file", "shared/x.md"],
+        ["plan", "--collection", "nope", "--task", "hi"],
+    ]
+    for argv in cases:
+        code, result = invoke(capsys, argv)
+        assert code == 2
+        assert result["status"] == "error"
+        assert "Unknown collection" in result["error"]
+
+
+def test_help_and_usage_do_not_require_a_valid_config(tmp_path, monkeypatch, capsys):
+    manifest = Path(os.environ["JEVSHELF_CONFIG"])
+    manifest.write_text("{invalid")
+    with pytest.raises(SystemExit) as top:
+        cli.main(["--help"])
+    assert top.value.code == 0
+    with pytest.raises(SystemExit) as search_help:
+        cli.main(["search", "--help"])
+    assert search_help.value.code == 0
+    capsys.readouterr()
+
+
+def test_subprocess_reports_config_errors_without_traceback(tmp_path, monkeypatch):
+    import subprocess
+    import sys
+
+    manifest = Path(os.environ["JEVSHELF_CONFIG"])
+    manifest.write_text("null")
+    console = Path(sys.executable).parent / "jevshelf"
+    completed = subprocess.run(
+        [str(console), "collections"],
+        capture_output=True, text=True, timeout=120,
+    )
+    assert completed.returncode == 2
+    payload = json.loads(completed.stdout)
+    assert payload["status"] == "error"
+    assert "Traceback" not in completed.stderr
+
+
+def test_subprocess_help_works_with_broken_config(tmp_path, monkeypatch):
+    import subprocess
+    import sys
+
+    manifest = Path(os.environ["JEVSHELF_CONFIG"])
+    manifest.write_text("{invalid")
+    console = Path(sys.executable).parent / "jevshelf"
+    completed = subprocess.run(
+        [str(console), "--help"],
+        capture_output=True, text=True, timeout=120,
+    )
+    assert completed.returncode == 0
+    assert "usage" in completed.stdout
+
+
+def test_init_writes_portable_demo_manifest(tmp_path, monkeypatch, capsys):
+    path = tmp_path / "fresh" / "collections.json"
+    monkeypatch.setenv("JEVSHELF_CONFIG", str(path))
+    code, result = invoke(capsys, ["init"])
+    assert code == 0
+    assert result["status"] == "created"
+    payload = json.loads(path.read_text())
+    assert payload["collections"]["writing"]["roots"] == ["@demo/skills"]
+
+    code, after = invoke(capsys, ["collections"])
+    assert code == 0
+    assert after["collections"]["writing"]["skills"] == 2
+
+    code, found = invoke(
+        capsys,
+        ["search", "--collection", "writing", "--mode", "lexical",
+         "--task", "summarize the meeting notes and identify next actions"],
+    )
+    assert code == 0
+    assert found["status"] == "selected"
+    skill = next(s for s in found["selected"] if s["name"] == "summarize-notes")
+    code, loaded = invoke(
+        capsys,
+        ["load", "--collection", "writing", "--id", skill["id"],
+         "--expected-digest", skill["digest"]],
+    )
+    assert code == 0
+    assert "Summarize the notes" in loaded["content"]
+
+
+def test_jev_search_with_missing_root_is_explicit_error(tmp_path, monkeypatch, capsys):
+    configure_collection("broken", [tmp_path / "does-not-exist"])
+    monkeypatch.setenv("JEV_API_KEY", "fixture-key")
+
+    def forbidden_live(self, state, budget):
+        raise AssertionError("empty catalogs must not reach Jev inference")
+
+    monkeypatch.setattr(Router, "_live", forbidden_live)
+    code, result = invoke(
+        capsys,
+        ["search", "--collection", "broken", "--mode", "jev", "--task", "summarize notes"],
+    )
+    assert code == 2
+    assert result["status"] == "error"
+    assert result["mode"] == "jev"
+    assert result["selected"] == []
+    assert result["catalog_size"] == 0
+    assert result["warnings"]
+    assert result["http_requests"] == 0
+    assert "No valid skills" in result["error"]
+
+
+def test_jev_search_with_only_rejected_skills_is_explicit_error(tmp_path, monkeypatch, capsys):
+    root = tmp_path / "broken-skills"
+    bad = root / "bad-skill"
+    bad.mkdir(parents=True)
+    (bad / "SKILL.md").write_text("no frontmatter here", encoding="utf-8")
+    configure_collection("broken", [root])
+    monkeypatch.setenv("JEV_API_KEY", "fixture-key")
+
+    def forbidden_live(self, state, budget):
+        raise AssertionError("empty catalogs must not reach Jev inference")
+
+    monkeypatch.setattr(Router, "_live", forbidden_live)
+    code, result = invoke(
+        capsys,
+        ["search", "--collection", "broken", "--mode", "jev", "--task", "summarize notes"],
+    )
+    assert code == 2
+    assert result["status"] == "error"
+    assert result["selected"] == []
+    assert result["catalog_size"] == 0
+    assert result["warnings"]
+    assert result["http_requests"] == 0
+
+
+def test_jev_semantic_no_match_stays_success(tmp_path, monkeypatch, capsys):
+    root = tmp_path / "marketing"
+    write_skill(root, "ads", "ads", "Plan paid advertising campaigns.", "Private ad instructions.")
+    configure_collection("marketing", [root])
+    monkeypatch.setenv("JEV_API_KEY", "fixture-key")
+
+    def evaluated_no_match(self, state, budget):
+        return {
+            "status": "no_match",
+            "selected": [],
+            "catalog_size": len(self.catalog.skills),
+            "shortlisted": 1,
+            "models": ["test-model"],
+            "retrieval": {"considered_skills": len(self.catalog.skills)},
+        }
+
+    monkeypatch.setattr(Router, "_live", evaluated_no_match)
+    code, result = invoke(
+        capsys,
+        ["search", "--collection", "marketing", "--mode", "jev",
+         "--task", "quantum cryptography"],
+    )
+    assert code == 0
+    assert result["status"] == "no_match"
+    assert result["selected"] == []
+    assert result["catalog_size"] == 1
+
+
+def test_jev_search_without_key_reports_credentials(tmp_path, monkeypatch, capsys):
+    root = tmp_path / "marketing"
+    write_skill(root, "ads", "ads", "Plan paid advertising campaigns.", "Body.")
+    configure_collection("marketing", [root])
+    monkeypatch.delenv("JEV_API_KEY", raising=False)
+    monkeypatch.delenv("TYPESAFE_API_KEY", raising=False)
+    code, result = invoke(
+        capsys,
+        ["search", "--collection", "marketing", "--mode", "jev",
+         "--task", "plan a paid advertising campaign"],
+    )
+    assert code == 2
+    assert result["status"] == "error"
+    assert "JEV_API_KEY" in result["error"]
