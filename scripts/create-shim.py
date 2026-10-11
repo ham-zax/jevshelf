@@ -31,8 +31,9 @@ description: {json.dumps(args.description)}
 
 For tasks matching this skill's description, use JevShelf to select an appropriate specialist only when it is needed.
 
-1. Run `jevshelf search --collection {args.collection} --mode jev --task "<focused task>" --max-results 2`.
+1. Frame a neutral current question. Supply concise context defining the product, current step, evidence, unknowns, constraints and unfamiliar names; do not name a preferred framework unless the user requested it. Run `jevshelf search --collection {args.collection} --mode jev --task "<current question>" --context "<brief situation and evidence>" --max-results 3`.
 2. Search returns metadata, **not** the full skill text. If status is `selected`, for each relevant result run `jevshelf load --collection {args.collection} --id <selected id> --expected-digest <selected digest>`; use pagination and `--file` for supporting skill-relative text.
 3. Honor original task scope, repo rules and host safety boundaries. Do not claim an API error or a lexical result was a Jev selection. Stop when the requested work is verified.
+4. Recommendations are optional: load only useful instructions, never fill three slots. For an explicitly named skill, use `--mode lexical --task "<exact skill name>"`; local fallback stays explicitly lexical, never a silent replacement for Jev's no-match, uncertainty or error.
 ''')
 print(path)

@@ -22,6 +22,17 @@ bash scripts/bootstrap.sh
 
 ## 2. Connect Skillshare as your source of truth
 
+For semantic selection, discover the current collection with `jevshelf collections`, then give Jev a neutral question and enough context to understand the current step:
+
+```bash
+./bin/jevshelf search --collection writing --mode jev \
+  --task 'Select guidance for making this technical explanation understandable' \
+  --context 'The audience is developers unfamiliar with this tool. We have a draft with unexplained terminology. The current step is editing the explanation, not marketing or changing its technical claims.' \
+  --max-results 3
+```
+
+Up to six candidates receive bounded verification; up to three recommendations are returned, without filling empty slots. Load only useful instructions by returned ID and digest. For an explicitly named skill, `--mode lexical --task '<exact skill name>'` is a sufficient local lookup. Label lexical fallback as lexical; do not silently substitute it for `no_match`, `uncertain` or `error`.
+
 Install [Skillshare](https://github.com/runkids/skillshare) separately, follow its official setup, and use its global source library. For example, to enable one optional specialist skill hidden behind JevShelf:
 
 ```bash

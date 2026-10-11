@@ -33,6 +33,16 @@ Native coding agents can see the **name and description of each visible shim** f
 
 The skill discovery step is the host's native behavior. Skillshare makes the shim visible to each configured target. It does *not* inject the skill into a running model, nor guarantee that any model will activate the shim for every relevant prompt. Start a new agent session after sync.
 
+## Selection contract
+
+The host supplies a neutral current question and a concise situation brief: product purpose, current step, observed evidence, unknowns and constraints. Define unfamiliar product/model names. Naming a framework is appropriate when the user requests it, but otherwise biases discovery. Jev receives no implicit conversation history.
+
+Jev ranks collection metadata, then verifies up to six candidates per ranking batch with independent applicability and usefulness questions. Verification considers the supplied task/context and bounded source excerpts containing capability and exclusion sections when available. Excerpts retain the 900-character default and conservative JSON-byte preflight bound; they are samples, not complete documents. The host digest-loads any selected skill before applying its instructions. Final recommendations remain capped at three and can be fewer or empty. Six is an initial coverage setting, not a measured optimum.
+
+These JevShelf-specific judgments and excerpts live in tracked `src/jevshelf/selection.py`; the pinned upstream router still owns transport, retries, request/time limits, ranking, statuses and usage accounting. Search and dry planning use the same six-candidate setting. The ignored dependency checkout is not patched.
+
+Lexical mode resolves an exact normalized skill name locally; other queries retain metadata BM25. Exact matches do not fill spare result slots with unrelated skills. Lexical results are explicitly labeled and never silently substitute for Jev errors, uncertainty or no-match. There is no automatic hybrid or embedding retrieval.
+
 - **Jev**: optional hosted semantic selection, requiring a valid TypeSafe key. The task, the collection metadata, and bounded excerpts may be sent to TypeSafe. Use lexical mode for local BM25 matching; label it as lexical, not Jev.
 - **Skillshare**: source management, provenance, updates, audit, target filters and symlink sync. These functions are not implemented by JevShelf itself.
 - **JevShelf**: portable collection configuration, selection interface and safe bounded reads, plus a shim generator.

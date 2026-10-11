@@ -5,6 +5,7 @@ import hashlib
 import json
 import os
 import time
+import unicodedata
 from contextlib import contextmanager
 from importlib import resources as _resources
 from pathlib import Path, PureWindowsPath
@@ -14,7 +15,7 @@ from jev_skill_router.catalog import BLOCKED_NAMES, TEXT_SUFFIXES, Catalog
 from jev_skill_router.config import Config, RouterError
 from jev_skill_router.jev import RequestBudget
 from jev_skill_router.retrieval import MetadataIndex
-from jev_skill_router.router import Router
+from .selection import Router, VERIFICATION_CANDIDATES
 
 
 MAX_JEV_RESULTS = 3
@@ -168,15 +169,25 @@ def _lexical_search(name: str, task: str, context: str, max_results: int) -> dic
     root = _collection_root(name)
     catalog = _catalog(name)
     skills = list(catalog.skills.values())
-    candidates = MetadataIndex(skills).search(f"{task}\n{context}", max_results)
-    selected = [_metadata(catalog.skills[skill_id], root, name) for skill_id in candidates.ids]
+    # Exact names are local identifiers, not a semantic relevance judgment.
+    normalize = lambda value: unicodedata.normalize("NFKC", value).strip().casefold()
+    exact = sorted((s for s in skills if normalize(s.name) == normalize(task)), key=lambda s: s.id)
+    if exact:
+        if not 1 <= max_results <= 10000:
+            raise RouterError("Retrieval needs a candidate limit from 1 to 10000")
+        selected = [_metadata(skill, root, name) for skill in exact[:max_results]]
+        method, matched_count = "exact_name", len(exact)
+    else:
+        candidates = MetadataIndex(skills).search(f"{task}\n{context}", max_results)
+        selected = [_metadata(catalog.skills[skill_id], root, name) for skill_id in candidates.ids]
+        method, matched_count = "metadata_bm25", candidates.matched_count
     return {
         "collection": name,
         "mode": "lexical",
-        "method": "metadata_bm25",
+        "method": method,
         "status": "selected" if selected else "no_match",
         "selected": selected,
-        "matched_skills": candidates.matched_count,
+        "matched_skills": matched_count,
         "catalog_size": len(skills),
         "elapsed_seconds": round(time.perf_counter() - started, 6),
     }
@@ -227,7 +238,7 @@ def _jev_search(name: str, task: str, context: str, max_results: int) -> dict:
         raise RouterError(f"Jev supports at most {MAX_JEV_RESULTS} selected skills per search")
 
     root = _collection_root(name)
-    config = Config(roots=_collection_roots(name), mode="live", max_skills=max_results)
+    config = Config(roots=_collection_roots(name), mode="live", max_skills=max_results, shortlist=VERIFICATION_CANDIDATES)
     router = Router(config)
     started = time.perf_counter()
     budget = RequestBudget(
@@ -369,7 +380,7 @@ def _plan(args: argparse.Namespace) -> dict:
     if not args.task.strip():
         raise RouterError("task must be nonempty text")
     root = _collection_root(args.collection)
-    router = Router(Config(roots=_collection_roots(args.collection), mode="live"))
+    router = Router(Config(roots=_collection_roots(args.collection), mode="live", shortlist=VERIFICATION_CANDIDATES))
     try:
         return {"collection": args.collection, **router.plan(args.task, args.context)}
     finally:
