@@ -35,6 +35,8 @@ The skill discovery step is the host's native behavior. Skillshare makes the shi
 
 ## Selection contract
 
+For the common global instruction section, request examples and cross-host update procedure, see [GLOBAL_AGENT_GUIDANCE.md](GLOBAL_AGENT_GUIDANCE.md).
+
 The host supplies a neutral current question and a concise situation brief: product purpose, current step, observed evidence, unknowns and constraints. Define unfamiliar product/model names. Naming a framework is appropriate when the user requests it, but otherwise biases discovery. Jev receives no implicit conversation history.
 
 Jev ranks collection metadata, then verifies up to six candidates per ranking batch with independent applicability and usefulness questions. Verification considers the supplied task/context and bounded source excerpts containing capability and exclusion sections when available. Excerpts retain the 900-character default and conservative JSON-byte preflight bound; they are samples, not complete documents. The host digest-loads any selected skill before applying its instructions. Final recommendations remain capped at three and can be fewer or empty. Six is an initial coverage setting, not a measured optimum.
