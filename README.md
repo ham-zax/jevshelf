@@ -64,7 +64,7 @@ See the walkthrough for prerequisites, target exclusions and ensuring the `jevsh
 - **Two retrieval options:** local lexical/BM25 matching, or semantic TypeSafe Jev selection. Search results are metadata; full skill text is not returned until a separate load.
 - **Bounded reads:** file checks, paths and SHA-256 content continuity reject stale skill selections and limit unnecessary instruction loading.
 - **Host neutrality:** one portable CLI and ordinary `SKILL.md` shims; let Skillshare deliver links to supported target folders.
-- **Backup and recovery:** a command that archives the current Skillshare source (including dirty working files), a Git bundle of committed history, and a target config snapshot. Optional **48-hour** WSL/systemd scheduling.
+- **Backup and recovery:** a command that mirrors the current Skillshare source and config into a private, deduplicated Git repository, committing and pushing only when files change. Optional one-shot WSL/systemd checks every 48 hours or after startup.
 - **No new process framework:** JevShelf chooses specialist instructions; it doesn't impose TDD, ticket formats, agents, commits, or lifecycle steps on your engineering workflow.
 
 **Backup now:**
@@ -80,7 +80,7 @@ bash scripts/install-backup-timer.sh
 systemctl --user status jevshelf-backup.timer
 ```
 
-The timer checks twice daily, backing up once at least 48 hours have elapsed. Actual archives are local and **never committed or pushed**. See [the quickstart](docs/quickstart.md#4-keep-it-maintainable-and-recoverable) for details and WSL suspend limitations.
+The timer is **not a resident service**: it launches a one-shot check five minutes after WSL starts, then approximately every 48 hours while running. Only changed files generate a Git commit and private push; an unchanged check exits without uploading. Your private local Git checkout can live in `~/repo/my-skills-backup/`. See [the quickstart](docs/quickstart.md#4-keep-it-maintainable-and-recoverable).
 
 ## Product vs. My Skills
 
@@ -92,10 +92,10 @@ This repository intentionally contains **two separate things**:
 | Install | `scripts/bootstrap.sh` + `jevshelf init` | Opt-in `my-skills/collections.json` and existing Skillshare source |
 | Collections | Any names and any source directories | Marketing, Thinking, Academic, UI, Code Specialists |
 | Engineering method | **None required** | Aegis active; Matt / Addy available for swap |
-| Storage | Your own local directories | My Skillshare source Git and private local backup snapshots |
+| Storage | Your own local directories | My Skillshare source Git and private `~/repo/my-skills-backup/` snapshot repository |
 | Support docs | [Quickstart](docs/quickstart.md), [architecture](docs/architecture.md) | [Installed catalog](my-skills/installed.md), [favorites](my-skills/references.md), [swap instructions](my-skills/prompts/swap-engineering-system.md), [backups](my-skills/backups.md) |
 
-The **My Skills** folder is a transparent real-world example—not a required preset. It documents my current skill inventory, reference ideas (including Distilly), Skillshare update practices, Aegis swaps, source provenance and snapshots. It contains **no API keys, personal conversation archives, or backup archive contents**.
+The **My Skills** folder is a transparent real-world example—not a required preset. It documents my current skill inventory, reference ideas (including Distilly), Skillshare update practices, Aegis swaps, source provenance and snapshots. It contains **no API keys, personal conversation archives, or backup archive contents**; the backup destination itself is a separate private repository.
 
 ## Scope and privacy
 

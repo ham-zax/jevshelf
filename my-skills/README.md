@@ -8,7 +8,7 @@ This folder is the **maintainer's example configuration and operating notebook**
 2. **JevShelf + TypeSafe Jev** keep occasional specialist skills behind five visible domain shims, selecting and loading only the relevant leaf when needed.
 3. **Aegis** is my one canonical engineering process. Matt Pocock and Addy Osmani are evaluated alternatives that remain uninstalled.
 4. **Codex, Pi and other configured agents** receive consistent visible Skillshare shims (with existing host-specific exclusions). The model decides whether to invoke a domain shim; JevShelf does not force host calls.
-5. **Local Git and periodic source snapshots** protect skills, metadata, source revisions, backups and rollback capabilities. Source archives never live in the public GitHub repository.
+5. **A private, change-based Git backup** protects installed skills, metadata and target configuration. The complete local backup checkout lives at `~/repo/my-skills-backup/`; it is never published to the public JevShelf repository.
 
 ## Current Skillshare library
 
@@ -61,15 +61,14 @@ Skillshare **v0.25.5** is installed as of 12 October 2026. Keeping it current is
 - **Haft** — considered for long-term engineering decision memory; **not installed**.
 - **No Yak Shaving** — reviewed, useful optional proportionality advice; **not installed**.
 
-## Local backup snapshots
+## Private backup repository
 
-The real archives are *not in GitHub*. See [backups.md](backups.md) for the schedule, restore details, and latest snapshot metadata. View all snapshots on this machine with:
+**[My Skills Backup](https://github.com/ham-zax/my-skills-backup)** is private, with the working checkout in `~/repo/my-skills-backup/`. See [backups.md](backups.md) for change detection, deduplication, WSL timing and restoration.
 
 ```bash
-bash scripts/list-backups.sh
-bash scripts/backup-skillshare.sh            # Back up now
-bash scripts/backup-skillshare.sh --if-due   # Back up if >= 48h since previous success
-systemctl --user status jevshelf-backup.timer      # See automatic timer
+bash scripts/backup-skillshare.sh           # Check now; commit and push only changes
+bash scripts/backup-skillshare.sh --if-due  # Skip when a check succeeded within 48h
+systemctl --user status jevshelf-backup.timer
 ```
 
-The timer is configured for **03:00 and 15:00 daily**, taking a new source snapshot when at least **48 hours** have elapsed since the last successful snapshot. Missed systemd calendar checks catch up when WSL is next running; no job executes while WSL is stopped.
+The passive timer runs a one-shot backup five minutes after WSL's user systemd session starts and approximately every 48 hours while running. It consumes no application RAM between jobs. No new Git commit or push happens when the backup is already current.

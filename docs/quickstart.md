@@ -59,19 +59,28 @@ ln -s "$(pwd)/bin/jevshelf" ~/.local/bin/jevshelf
 
 ## 4. Keep it maintainable and recoverable
 
-Skillshare handles audits, updates and host sync. For a recoverable local source snapshot, run:
+Skillshare manages updates and host sync. To snapshot your source and configuration into a **private** Git repository, first create your own private GitHub repository, then supply it during the first backup:
 
 ```bash
-bash scripts/backup-skillshare.sh
+# Example remote; substitute your own PRIVATE repository URL.
+JEVSHELF_BACKUP_REMOTE=https://github.com/YOUR-ACCOUNT/my-skills-backup.git \
+  bash scripts/backup-skillshare.sh
 ```
 
-For a Linux/WSL user-systemd timer that checks twice daily and captures the source approximately once every 48 hours while systemd is running:
+The script creates or reuses a local Git checkout at `~/repo/my-skills-backup/` by default (override with `JEVSHELF_BACKUP_CHECKOUT`). It copies current Skillshare skill files, metadata and selected config while excluding the original source's `.git`, common credential files, and old backup archives. It creates an incremental Git commit **only on actual changes**, and pushes only if a new commit is pending. If an upload fails, it is retried during a later invocation.
+
+```bash
+bash scripts/backup-skillshare.sh          # Force a check now; skip unchanged commits
+bash scripts/backup-skillshare.sh --if-due # Respect the 48-hour throttle
+```
+
+On Linux/WSL with user systemd, install the passive scheduler:
 
 ```bash
 bash scripts/install-backup-timer.sh
-systemctl --user status jevshelf-backup.timer
+systemctl --user list-timers jevshelf-backup.timer
 ```
 
-Backups live under `~/.local/share/skillshare/backups/jevshelf-*` by default, with a full source Git bundle **and** a working-tree archive (including uncommitted files), plus target config. **No backups are pushed to GitHub.** If WSL is shut down, the persistent timer will catch up on the next systemd user session; no job can run while the distro is stopped.
+This is **not an always-on daemon**. A short `Type=oneshot` job runs approximately **five minutes after WSL's user systemd starts** and at 48-hour intervals while it remains running. It exits after checking. No job executes while WSL is stopped, and changes are not copied continuously. On a future WSL start it checks again after the delay. The background timer itself uses systemd's normal scheduling, not resident application memory.
 
-To uninstall a routed source, use **scoped** Skillshare uninstall commands and sync; don't erase unrelated libraries. If you need a separate project-only skill, install with Skillshare project mode from the *target application's* directory instead of JevShelf.
+**Backup storage:** The local Git checkout is in `~/repo/my-skills-backup/`; the GitHub repository must remain private. The backup's *snapshot history* is Git commits, not repeated compressed archives. The source's original `.git` history is not replicated; retain it separately if that is needed.
