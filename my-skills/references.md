@@ -5,6 +5,21 @@ These repositories are **references for future evaluation**, not active Skillsha
 | Skill / project | Source | State | Reconsider when |
 |---|---|---|---|
 | **Distilly** (`distilly`, formerly Colleague Skill) | [titanwings/distilly](https://github.com/titanwings/distilly) | **Favorite / conditional / not installed** | You want an agent to adapt to an individual person's documented ways of reasoning, decision-making, working, or writing, and have suitable source material |
+| **REA — Reverse Engineer Anything** (`rea-agents`) | [morluto/rea](https://github.com/morluto/rea) | **Interesting / conditional / not installed** | You need evidence-backed analysis of an application, executable, website, or feature without its source code, potentially to build your own independently implemented version |
+
+## REA — Reverse Engineer Anything
+
+**What it does:** An agent-oriented **reverse-engineering CLI + MCP server**, not merely a standalone `SKILL.md`. REA helps inspect software behavior and artifacts (such as native binaries, JavaScript/Electron applications, .NET assemblies and websites), trace implementation clues, and explain findings with supporting evidence. The agent can then build a separate implementation based on that understanding; REA does not recover the application's original source code automatically.
+
+**When it becomes useful:** An authorized reverse-engineering investigation, such as understanding the behavior of an app feature, evaluating a binary without available source, tracing an Electron application's behavior, or checking what a tool actually does before independently implementing a comparable feature. It is a specialist capability rather than an always-on coding workflow.
+
+**Important installation distinction:** The documented setup is `npx rea-agents setup`, which can register an MCP server and agent instructions and connect to third-party binary analyzers such as **Ghidra, Hopper or IDA**. It is **not** something that becomes fully operational by copying a single skill through Skillshare. Upstream requirements include a compatible Node.js version and, for native analysis, an analysis backend. The WSL/Linux support and host setup should be rechecked against current documentation before adoption. Use the project's setup review/approval flow if explicitly requested; don't silently add MCP tools to Codex or Pi.
+
+**Caution:** Analyze only software and artifacts you are authorized to inspect. Assess license, terms and security constraints before any binary analysis, and do not misrepresent inferred behavior as recovered original code. REA's local analysis model is useful, but inspect any requested integrations and tool permissions before enabling them.
+
+**Decision:** Reference only. **Not installed** through Skillshare, JevShelf, npm or MCP. Review on a concrete reverse-engineering task, not as another globally loaded general engineering skill.
+
+---
 
 ## Distilly
 
