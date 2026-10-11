@@ -14,9 +14,10 @@
         "~/.config/skillshare/skills/vault-matt-review/wayfinder",
         "~/.config/skillshare/skills/vault-matt-review/grill-with-docs",
         "~/.config/skillshare/skills/vault-matt-review/retro",
-        "~/.config/skillshare/skills/vault-matt-review/handoff"
+        "~/.config/skillshare/skills/vault-matt-review/handoff",
+        "~/.config/skillshare/skills/vault-lateral"
       ],
-      "description": "34 on-demand thinking, grilling, wayfinding, retrospective and handoff skills"
+      "description": "43 on-demand reasoning, interviews, retrospectives and lateral creativity skills"
     },
     "academic": {
       "roots": [

@@ -28,9 +28,10 @@ This folder is the **maintainer's example configuration and operating notebook**
 | Matt Pocock curated specialists | 13 | Jev-only (not a second engineering lifecycle) |
 | Addy Osmani curated specialists | 7 | Jev-only (not a second engineering lifecycle) |
 | ASD-STE100 technical writing | 1 | Jev-only |
-| **Total in Skillshare source** | **94** | **45 visible source skills + 49 hidden leaf skills** |
+| Danium lateral-thinking toolkit | 9 | Jev-only (8 techniques + router) |
+| **Total in Skillshare source** | **103** | **45 visible source skills + 58 hidden leaf skills** |
 
-The six routed collections are **Marketing 50, Thinking 34, Academic 5, UI 17, Code Specialists 16, and Writing 6**. Marketing and Thinking are backed by read-only upstream checkouts, while the newer specialist leaves are held in Skillshare-managed hidden `vault-*` source groups. Native agents see only their domain entry points.
+The six routed collections are **Marketing 50, Thinking 43, Academic 5, UI 17, Code Specialists 16, and Writing 6**. Marketing and Thinking are backed by read-only upstream checkouts, while the newer specialist leaves are held in Skillshare-managed hidden `vault-*` source groups. Native agents see only their domain entry points.
 
 **Current full list:** [installed.md](installed.md) and [machine-readable installed.csv](installed.csv). The inventory also catalogs all 38 Matt Pocock and 25 Addy Osmani skills: **13 Matt and 7 Addy specialists are hidden Jev leaves**, while their full engineering systems remain inactive.
 

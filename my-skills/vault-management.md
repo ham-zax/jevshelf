@@ -100,3 +100,9 @@ The `no-yak-shaving` skill was inspected in full, but not installed; its proport
 ## Curated Matt/Addy and Writing specialist imports (2026-10-12)
 
 The current, authoritative 2026-10-12 status is documented in [engineering-specialists.md](engineering-specialists.md): 13 hidden Matt leaves, 7 hidden Addy leaves and one hidden ASD-STE100 leaf. They reuse `jevshelf-thinking` and `code-specialists` and add **one** globally visible `jevshelf-writing` shim. Total source is **94 (45 visible, 49 hidden)**. Six JevShelf collections have counts **50/34/5/17/16/6** for Marketing/Thinking/Academic/UI/Code/Writing. Older counts above describe earlier installation snapshots only.
+
+## danium lateral-thinking toolkit (2026-10-12)
+
+The [danium/lateral-thinking](https://github.com/danium/lateral-thinking) source is pinned to `bde713dcbb9b2dab53cbca900b057db1fc46f398` (MIT). Nine skills were imported into hidden `vault-lateral/`: the `lateral` router and `random-stimulus`, `provocation`, `inversion`, `concept-fan`, `analogy`, `scamper`, `six-hats`, `worst-idea`. The unrelated `post` writing skill was not installed. They are reachable through the **existing** `jevshelf-thinking` shim without adding native startup context. Thinking now has **43** members; total Skillshare source **103**, including **45 visible** and **58 hidden**.
+
+The single CRITICAL static audit match for `analogy/SKILL.md:47` was checked: it is a quoted metaphor explaining when a forced analogy should be abandoned, not an instruction to redirect the agent. Only that skill was imported with a reviewed Skillshare `--force` finding acceptance. The global threshold was not changed. Future upstream updates require a fresh audit. The upstream router's `../<technique>/SKILL.md` sibling load must be translated to a second JevShelf search and digest-checked load because the JevShelf CLI does not allow paths outside a selected skill root.

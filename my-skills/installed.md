@@ -5,9 +5,9 @@ Regenerate with: python3 my-skills/scripts/refresh-inventory.py (requires Skills
 The companion CSV is the complete row-level ledger.
 
 - **Current canonical engineering system:** Aegis
-- **Installed Skillshare source entries:** 94
+- **Installed Skillshare source entries:** 103
 - **Visible/source skills:** 45 (includes 17 original, 23 Aegis, 4 additional domain shims, and jevify)
-- **Managed hidden Jev leaves:** 49 (Academic 5, Emil 15, Sentry 4, lassejlv 3, Taste 1, Matt specialists 13, Addy specialists 7, Writing STE 1)
+- **Managed hidden Jev leaves:** 58 (Academic 5, Emil 15, Sentry 4, lassejlv 3, Taste 1, Matt specialists 13, Addy specialists 7, Writing STE 1, Lateral 9)
 - **Aegis:** 23 installed of 23 available
 - **Matt Pocock:** 0 installed of 38 available; 27 were in the inspected official plugin
 - **Addy Osmani:** 0 installed of 25 available
@@ -115,6 +115,15 @@ The companion CSV is the complete row-level ledger.
 | addy-specialist-hidden | vault-addy-review__observability-and-instrumentation |
 | addy-specialist-hidden | vault-addy-review__source-driven-development |
 | writing-hidden | vault-writing__asd-ste100-skill |
+| lateral-hidden | vault-lateral__analogy |
+| lateral-hidden | vault-lateral__concept-fan |
+| lateral-hidden | vault-lateral__inversion |
+| lateral-hidden | vault-lateral__lateral |
+| lateral-hidden | vault-lateral__provocation |
+| lateral-hidden | vault-lateral__random-stimulus |
+| lateral-hidden | vault-lateral__scamper |
+| lateral-hidden | vault-lateral__six-hats |
+| lateral-hidden | vault-lateral__worst-idea |
 
 ## Available but inactive engineering collections
 
