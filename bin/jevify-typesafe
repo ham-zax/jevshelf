@@ -1,0 +1,60 @@
+#!/usr/bin/env bash
+# Invoke the unmodified Jevify helpers with this WSL user's existing TypeSafe
+# credential. Never print, persist, or pass the key as a CLI argument.
+set -euo pipefail
+
+skill_dir="${JEVIFY_SKILL_DIR:-$HOME/.config/skillshare/skills/jevify}"
+case "${1:-}" in
+  scan)
+    helper="$skill_dir/scripts/scan.py"
+    shift
+    ;;
+  run-cases)
+    helper="$skill_dir/scripts/run_cases.py"
+    shift
+    ;;
+  help|--help|-h|"")
+    cat <<'USAGE'
+Usage: jevify-typesafe scan INPUT --query "..." --output REPORT.json [options]
+       jevify-typesafe run-cases [helper options]
+
+Runs the official bundled Jevify Python helpers with TypeSafe (not OpenRouter).
+The existing login-shell JEV_API_KEY is mapped to TYPESAFE_API_KEY only within
+the child process. A preexisting TYPESAFE_API_KEY takes precedence.
+No credentials are written to disk. Use --dry-run to preview scan requests.
+USAGE
+    exit 0
+    ;;
+  *)
+    printf 'Unknown command: %s (expected scan or run-cases)\n' "$1" >&2
+    exit 2
+    ;;
+esac
+
+if [[ ! -f "$helper" ]]; then
+  printf 'Jevify helper not found: %s\n' "$helper" >&2
+  exit 127
+fi
+
+if [[ -n "${TYPESAFE_API_KEY:-}" ]]; then
+  exec python3 "$helper" "$@"
+fi
+
+if [[ -n "${JEV_API_KEY:-}" ]]; then
+  export TYPESAFE_API_KEY="$JEV_API_KEY"
+  exec python3 "$helper" "$@"
+fi
+
+# Agent host processes may omit the user's login-shell variables. The user's
+# existing JEV_API_KEY is available in an interactive login shell on this WSL
+# machine; use it without sourcing/parsing private credential files ourselves.
+exec bash -lic '
+  if [[ -z "${TYPESAFE_API_KEY:-}" && -n "${JEV_API_KEY:-}" ]]; then
+    export TYPESAFE_API_KEY="$JEV_API_KEY"
+  fi
+  if [[ -z "${TYPESAFE_API_KEY:-}" ]]; then
+    printf "TypeSafe API key unavailable. Set TYPESAFE_API_KEY or JEV_API_KEY in the login shell.\n" >&2
+    exit 2
+  fi
+  exec "$@"
+' jevify-login python3 "$helper" "$@"

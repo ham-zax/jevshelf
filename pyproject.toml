@@ -1,0 +1,24 @@
+[build-system]
+requires = ["setuptools>=68"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "jevshelf"
+version = "0.1.0"
+description = "Portable, collection-scoped lazy skill loading with Jev and Skillshare"
+readme = "README.md"
+requires-python = ">=3.11"
+dependencies = ["jev-skill-router==0.4.1"]
+
+[project.optional-dependencies]
+test = ["pytest>=8,<10"]
+
+[project.scripts]
+pandora-skills = "jevshelf.cli:main"
+jevshelf = "jevshelf.cli:main"
+
+[tool.setuptools.packages.find]
+where = ["src"]
+
+[tool.pytest.ini_options]
+testpaths = ["tests"]

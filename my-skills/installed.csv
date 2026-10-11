@@ -1,0 +1,136 @@
+collection,skill,status,skillshare_name,source,upstream_path,notes
+baseline,academic-research,installed,academic-research,jevshelf:shims/academic-research,academic-research,Existing skill; preserve during engineering swaps
+baseline,archify,installed,archify,local,archify,Existing skill; preserve during engineering swaps
+baseline,arm-webharness,installed,arm-webharness,local,arm-webharness,Existing skill; preserve during engineering swaps
+baseline,cachebeat,installed,cachebeat,local,cachebeat,Existing skill; preserve during engineering swaps
+baseline,claive-orchestration,installed,claive-orchestration,local,claive-orchestration,Existing skill; preserve during engineering swaps
+baseline,claive-routing-codex,installed,claive-routing-codex,local,claive-routing-codex,Existing skill; preserve during engineering swaps
+baseline,code-specialists,installed,code-specialists,jevshelf:shims/code-specialists,code-specialists,Existing skill; preserve during engineering swaps
+baseline,codebase-memory,installed,codebase-memory,local,codebase-memory,Existing skill; preserve during engineering swaps
+baseline,find-skills,installed,find-skills,local,find-skills,Existing skill; preserve during engineering swaps
+baseline,impeccable,installed,impeccable,local,impeccable,Existing skill; preserve during engineering swaps
+baseline,jevify,installed,jevify,github.com/altryne/jevify,jevify,Existing skill; preserve during engineering swaps
+baseline,khiip,installed,khiip,local,khiip,Existing skill; preserve during engineering swaps
+baseline,open-websearch,installed,open-websearch,local,open-websearch,Existing skill; preserve during engineering swaps
+baseline,pandora-marketing,installed,pandora-marketing,jevshelf:shims/marketing,pandora-marketing,Existing skill; preserve during engineering swaps
+baseline,pandora-thinking,installed,pandora-thinking,jevshelf:shims/thinking,pandora-thinking,Existing skill; preserve during engineering swaps
+baseline,provenfast,installed,provenfast,local,provenfast,Existing skill; preserve during engineering swaps
+baseline,satori,installed,satori,local,satori,Existing skill; preserve during engineering swaps
+baseline,skillshare,installed,skillshare,github.com/runkids/skillshare/skills/skillshare,skillshare,Existing skill; preserve during engineering swaps
+baseline,treg,installed,treg,local,treg,Existing skill; preserve during engineering swaps
+baseline,ui-craft,installed,ui-craft,jevshelf:shims/ui-craft,ui-craft,Existing skill; preserve during engineering swaps
+baseline,wh-browser,installed,wh-browser,local,wh-browser,Existing skill; preserve during engineering swaps
+aegis,anti-entropy-governance,installed,aegis__anti-entropy-governance,github.com/GanyuanRan/Aegis/skills/anti-entropy-governance,skills/anti-entropy-governance,
+aegis,brainstorming,installed,aegis__brainstorming,github.com/GanyuanRan/Aegis/skills/brainstorming,skills/brainstorming,
+aegis,communicating-concisely,installed,aegis__communicating-concisely,github.com/GanyuanRan/Aegis/skills/communicating-concisely,skills/communicating-concisely,
+aegis,dispatching-parallel-agents,installed,aegis__dispatching-parallel-agents,github.com/GanyuanRan/Aegis/skills/dispatching-parallel-agents,skills/dispatching-parallel-agents,
+aegis,establishing-project-context,installed,aegis__establishing-project-context,github.com/GanyuanRan/Aegis/skills/establishing-project-context,skills/establishing-project-context,
+aegis,executing-plans,installed,aegis__executing-plans,github.com/GanyuanRan/Aegis/skills/executing-plans,skills/executing-plans,
+aegis,finishing-a-development-branch,installed,aegis__finishing-a-development-branch,github.com/GanyuanRan/Aegis/skills/finishing-a-development-branch,skills/finishing-a-development-branch,
+aegis,first-principles-review,installed,aegis__first-principles-review,github.com/GanyuanRan/Aegis/skills/first-principles-review,skills/first-principles-review,
+aegis,goal-framing,installed,aegis__goal-framing,github.com/GanyuanRan/Aegis/skills/goal-framing,skills/goal-framing,
+aegis,long-task-continuation,installed,aegis__long-task-continuation,github.com/GanyuanRan/Aegis/skills/long-task-continuation,skills/long-task-continuation,
+aegis,receiving-code-review,installed,aegis__receiving-code-review,github.com/GanyuanRan/Aegis/skills/receiving-code-review,skills/receiving-code-review,
+aegis,recording-architecture-decisions,installed,aegis__recording-architecture-decisions,github.com/GanyuanRan/Aegis/skills/recording-architecture-decisions,skills/recording-architecture-decisions,
+aegis,requesting-code-review,installed,aegis__requesting-code-review,github.com/GanyuanRan/Aegis/skills/requesting-code-review,skills/requesting-code-review,
+aegis,subagent-driven-development,installed,aegis__subagent-driven-development,github.com/GanyuanRan/Aegis/skills/subagent-driven-development,skills/subagent-driven-development,
+aegis,systematic-debugging,installed,aegis__systematic-debugging,github.com/GanyuanRan/Aegis/skills/systematic-debugging,skills/systematic-debugging,
+aegis,test-driven-development,installed,aegis__test-driven-development,github.com/GanyuanRan/Aegis/skills/test-driven-development,skills/test-driven-development,
+aegis,ui-ux-governance,installed,aegis__ui-ux-governance,github.com/GanyuanRan/Aegis/skills/ui-ux-governance,skills/ui-ux-governance,
+aegis,update-aegis,installed,aegis__update-aegis,github.com/GanyuanRan/Aegis/skills/update-aegis,skills/update-aegis,
+aegis,using-aegis,installed,aegis__using-aegis,github.com/GanyuanRan/Aegis/skills/using-aegis,skills/using-aegis,
+aegis,using-git-worktrees,installed,aegis__using-git-worktrees,github.com/GanyuanRan/Aegis/skills/using-git-worktrees,skills/using-git-worktrees,
+aegis,verification-before-completion,installed,aegis__verification-before-completion,github.com/GanyuanRan/Aegis/skills/verification-before-completion,skills/verification-before-completion,
+aegis,writing-plans,installed,aegis__writing-plans,github.com/GanyuanRan/Aegis/skills/writing-plans,skills/writing-plans,
+aegis,writing-skills,installed,aegis__writing-skills,github.com/GanyuanRan/Aegis/skills/writing-skills,skills/writing-skills,
+academic-hidden,academic-paper,managed-hidden,vault-academic__academic-paper,github.com/Imbad0202/academic-research-skills/academic-paper,vault-academic/academic-paper,Skillshare manages/updates; excluded from all agent targets; Jev-only
+academic-hidden,academic-paper-reviewer,managed-hidden,vault-academic__academic-paper-reviewer,github.com/Imbad0202/academic-research-skills/academic-paper-reviewer,vault-academic/academic-paper-reviewer,Skillshare manages/updates; excluded from all agent targets; Jev-only
+academic-hidden,academic-pipeline,managed-hidden,vault-academic__academic-pipeline,github.com/Imbad0202/academic-research-skills/academic-pipeline,vault-academic/academic-pipeline,Skillshare manages/updates; excluded from all agent targets; Jev-only
+academic-hidden,deep-research,managed-hidden,vault-academic__deep-research,github.com/Imbad0202/academic-research-skills/deep-research,vault-academic/deep-research,Skillshare manages/updates; excluded from all agent targets; Jev-only
+academic-hidden,sr-screener,managed-hidden,vault-academic__sr-screener,github.com/Imbad0202/academic-research-skills/sr-screener,vault-academic/sr-screener,Skillshare manages/updates; excluded from all agent targets; Jev-only
+emil-hidden,animate,managed-hidden,vault-emil__animate,github.com/emilkowalski/skills/skills/animate,vault-emil/animate,Skillshare manages/updates; excluded from all agent targets; Jev-only
+emil-hidden,animate-expo,managed-hidden,vault-emil__animate-expo,github.com/emilkowalski/skills/skills/animate-expo,vault-emil/animate-expo,Skillshare manages/updates; excluded from all agent targets; Jev-only
+emil-hidden,animation-performance,managed-hidden,vault-emil__animation-performance,github.com/emilkowalski/skills/skills/animation-performance,vault-emil/animation-performance,Skillshare manages/updates; excluded from all agent targets; Jev-only
+emil-hidden,animation-vocabulary,managed-hidden,vault-emil__animation-vocabulary,github.com/emilkowalski/skills/skills/animation-vocabulary,vault-emil/animation-vocabulary,Skillshare manages/updates; excluded from all agent targets; Jev-only
+emil-hidden,apple-design,managed-hidden,vault-emil__apple-design,github.com/emilkowalski/skills/skills/apple-design,vault-emil/apple-design,Skillshare manages/updates; excluded from all agent targets; Jev-only
+emil-hidden,ask-sonner,managed-hidden,vault-emil__ask-sonner,github.com/emilkowalski/skills/skills/ask-sonner,vault-emil/ask-sonner,Skillshare manages/updates; excluded from all agent targets; Jev-only
+emil-hidden,break-ui,managed-hidden,vault-emil__break-ui,github.com/emilkowalski/skills/skills/break-ui,vault-emil/break-ui,Skillshare manages/updates; excluded from all agent targets; Jev-only
+emil-hidden,emil-design-eng,managed-hidden,vault-emil__emil-design-eng,github.com/emilkowalski/skills/skills/emil-design-eng,vault-emil/emil-design-eng,Skillshare manages/updates; excluded from all agent targets; Jev-only
+emil-hidden,find-animation-opportunities,managed-hidden,vault-emil__find-animation-opportunities,github.com/emilkowalski/skills/skills/find-animation-opportunities,vault-emil/find-animation-opportunities,Skillshare manages/updates; excluded from all agent targets; Jev-only
+emil-hidden,improve-animations,managed-hidden,vault-emil__improve-animations,github.com/emilkowalski/skills/skills/improve-animations,vault-emil/improve-animations,Skillshare manages/updates; excluded from all agent targets; Jev-only
+emil-hidden,mobile-native,managed-hidden,vault-emil__mobile-native,github.com/emilkowalski/skills/skills/mobile-native,vault-emil/mobile-native,Skillshare manages/updates; excluded from all agent targets; Jev-only
+emil-hidden,pick-ui-library,managed-hidden,vault-emil__pick-ui-library,github.com/emilkowalski/skills/skills/pick-ui-library,vault-emil/pick-ui-library,Skillshare manages/updates; excluded from all agent targets; Jev-only
+emil-hidden,prototype,managed-hidden,vault-emil__prototype,github.com/emilkowalski/skills/skills/prototype,vault-emil/prototype,Skillshare manages/updates; excluded from all agent targets; Jev-only
+emil-hidden,review-animations,managed-hidden,vault-emil__review-animations,github.com/emilkowalski/skills/skills/review-animations,vault-emil/review-animations,Skillshare manages/updates; excluded from all agent targets; Jev-only
+emil-hidden,write-swift,managed-hidden,vault-emil__write-swift,github.com/emilkowalski/skills/skills/write-swift,vault-emil/write-swift,Skillshare manages/updates; excluded from all agent targets; Jev-only
+sentry-hidden,code-simplifier,managed-hidden,vault-sentry__code-simplifier,github.com/getsentry/skills/skills/code-simplifier,vault-sentry/code-simplifier,Skillshare manages/updates; excluded from all agent targets; Jev-only
+sentry-hidden,find-bugs,managed-hidden,vault-sentry__find-bugs,github.com/getsentry/skills/skills/find-bugs,vault-sentry/find-bugs,Skillshare manages/updates; excluded from all agent targets; Jev-only
+sentry-hidden,security-review,managed-hidden,vault-sentry__security-review,github.com/getsentry/skills/skills/security-review,vault-sentry/security-review,Skillshare manages/updates; excluded from all agent targets; Jev-only
+sentry-hidden,skill-scanner,managed-hidden,vault-sentry__skill-scanner,github.com/getsentry/skills/skills/skill-scanner,vault-sentry/skill-scanner,Skillshare manages/updates; excluded from all agent targets; Jev-only
+lassejlv-hidden,backend-security-audit,managed-hidden,vault-lassejlv__backend-security-audit,github.com/lassejlv/skills/skills/backend-security-audit,vault-lassejlv/backend-security-audit,Skillshare manages/updates; excluded from all agent targets; Jev-only
+lassejlv-hidden,minimize-api-responses,managed-hidden,vault-lassejlv__minimize-api-responses,github.com/lassejlv/skills/skills/minimize-api-responses,vault-lassejlv/minimize-api-responses,Skillshare manages/updates; excluded from all agent targets; Jev-only
+lassejlv-hidden,no-vibe-code,managed-hidden,vault-lassejlv__no-vibe-code,github.com/lassejlv/skills/skills/no-vibe-code,vault-lassejlv/no-vibe-code,Skillshare manages/updates; excluded from all agent targets; Jev-only
+taste-hidden,taste-skill,managed-hidden,vault-taste__taste-skill,github.com/Leonxlnx/taste-skill/skills/taste-skill,vault-taste/taste-skill,Skillshare manages/updates; excluded from all agent targets; Jev-only
+matt,ask-matt,available-not-installed,,https://github.com/mattpocock/skills,skills/engineering/ask-matt,official plugin skill
+matt,chief-of-staff,available-not-installed,,https://github.com/mattpocock/skills,skills/in-progress/chief-of-staff,not in official plugin (in-progress or misc)
+matt,claude-handoff,available-not-installed,,https://github.com/mattpocock/skills,skills/in-progress/claude-handoff,not in official plugin (in-progress or misc)
+matt,code-review,available-not-installed,,https://github.com/mattpocock/skills,skills/engineering/code-review,official plugin skill
+matt,codebase-design,available-not-installed,,https://github.com/mattpocock/skills,skills/engineering/codebase-design,official plugin skill
+matt,diagnosing-bugs,available-not-installed,,https://github.com/mattpocock/skills,skills/engineering/diagnosing-bugs,official plugin skill
+matt,domain-modeling,available-not-installed,,https://github.com/mattpocock/skills,skills/engineering/domain-modeling,official plugin skill
+matt,git-guardrails-claude-code,available-not-installed,,https://github.com/mattpocock/skills,skills/misc/git-guardrails-claude-code,not in official plugin (in-progress or misc)
+matt,grill-me,available-not-installed,,https://github.com/mattpocock/skills,skills/productivity/grill-me,official plugin skill
+matt,grill-with-docs,available-not-installed,,https://github.com/mattpocock/skills,skills/engineering/grill-with-docs,official plugin skill
+matt,grilling,available-not-installed,,https://github.com/mattpocock/skills,skills/productivity/grilling,official plugin skill
+matt,handoff,available-not-installed,,https://github.com/mattpocock/skills,skills/productivity/handoff,official plugin skill
+matt,implement,available-not-installed,,https://github.com/mattpocock/skills,skills/engineering/implement,official plugin skill
+matt,implement-spec,available-not-installed,,https://github.com/mattpocock/skills,skills/engineering/implement-spec,official plugin skill
+matt,improve-codebase-architecture,available-not-installed,,https://github.com/mattpocock/skills,skills/engineering/improve-codebase-architecture,official plugin skill
+matt,loop-me,available-not-installed,,https://github.com/mattpocock/skills,skills/in-progress/loop-me,not in official plugin (in-progress or misc)
+matt,migrate-to-shoehorn,available-not-installed,,https://github.com/mattpocock/skills,skills/misc/migrate-to-shoehorn,not in official plugin (in-progress or misc)
+matt,pr,available-not-installed,,https://github.com/mattpocock/skills,skills/engineering/pr,official plugin skill
+matt,prototype,available-not-installed,,https://github.com/mattpocock/skills,skills/engineering/prototype,official plugin skill
+matt,research,available-not-installed,,https://github.com/mattpocock/skills,skills/engineering/research,official plugin skill
+matt,retro,available-not-installed,,https://github.com/mattpocock/skills,skills/engineering/retro,official plugin skill
+matt,scaffold-exercises,available-not-installed,,https://github.com/mattpocock/skills,skills/misc/scaffold-exercises,not in official plugin (in-progress or misc)
+matt,setup-matt-pocock-skills,available-not-installed,,https://github.com/mattpocock/skills,skills/engineering/setup-matt-pocock-skills,official plugin skill
+matt,setup-pre-commit,available-not-installed,,https://github.com/mattpocock/skills,skills/misc/setup-pre-commit,not in official plugin (in-progress or misc)
+matt,setup-ts-deep-modules,available-not-installed,,https://github.com/mattpocock/skills,skills/in-progress/setup-ts-deep-modules,not in official plugin (in-progress or misc)
+matt,tdd,available-not-installed,,https://github.com/mattpocock/skills,skills/engineering/tdd,official plugin skill
+matt,teach,available-not-installed,,https://github.com/mattpocock/skills,skills/productivity/teach,official plugin skill
+matt,to-questionnaire,available-not-installed,,https://github.com/mattpocock/skills,skills/productivity/to-questionnaire,official plugin skill
+matt,to-spec,available-not-installed,,https://github.com/mattpocock/skills,skills/engineering/to-spec,official plugin skill
+matt,to-tickets,available-not-installed,,https://github.com/mattpocock/skills,skills/engineering/to-tickets,official plugin skill
+matt,triage,available-not-installed,,https://github.com/mattpocock/skills,skills/engineering/triage,official plugin skill
+matt,wait-what,available-not-installed,,https://github.com/mattpocock/skills,skills/productivity/wait-what,official plugin skill
+matt,wayfinder,available-not-installed,,https://github.com/mattpocock/skills,skills/engineering/wayfinder,official plugin skill
+matt,wizard,available-not-installed,,https://github.com/mattpocock/skills,skills/engineering/wizard,official plugin skill
+matt,writing-beats,available-not-installed,,https://github.com/mattpocock/skills,skills/in-progress/writing-beats,not in official plugin (in-progress or misc)
+matt,writing-for-agents,available-not-installed,,https://github.com/mattpocock/skills,skills/productivity/writing-for-agents,official plugin skill
+matt,writing-fragments,available-not-installed,,https://github.com/mattpocock/skills,skills/in-progress/writing-fragments,not in official plugin (in-progress or misc)
+matt,writing-shape,available-not-installed,,https://github.com/mattpocock/skills,skills/in-progress/writing-shape,not in official plugin (in-progress or misc)
+addy,api-and-interface-design,available-not-installed,,https://github.com/addyosmani/agent-skills,skills/api-and-interface-design,
+addy,browser-testing-with-devtools,available-not-installed,,https://github.com/addyosmani/agent-skills,skills/browser-testing-with-devtools,
+addy,ci-cd-and-automation,available-not-installed,,https://github.com/addyosmani/agent-skills,skills/ci-cd-and-automation,
+addy,code-review-and-quality,available-not-installed,,https://github.com/addyosmani/agent-skills,skills/code-review-and-quality,
+addy,code-simplification,available-not-installed,,https://github.com/addyosmani/agent-skills,skills/code-simplification,
+addy,constraint-driven-development,available-not-installed,,https://github.com/addyosmani/agent-skills,skills/constraint-driven-development,
+addy,context-engineering,available-not-installed,,https://github.com/addyosmani/agent-skills,skills/context-engineering,
+addy,debugging-and-error-recovery,available-not-installed,,https://github.com/addyosmani/agent-skills,skills/debugging-and-error-recovery,
+addy,deprecation-and-migration,available-not-installed,,https://github.com/addyosmani/agent-skills,skills/deprecation-and-migration,
+addy,documentation-and-adrs,available-not-installed,,https://github.com/addyosmani/agent-skills,skills/documentation-and-adrs,
+addy,doubt-driven-development,available-not-installed,,https://github.com/addyosmani/agent-skills,skills/doubt-driven-development,
+addy,frontend-ui-engineering,available-not-installed,,https://github.com/addyosmani/agent-skills,skills/frontend-ui-engineering,
+addy,git-workflow-and-versioning,available-not-installed,,https://github.com/addyosmani/agent-skills,skills/git-workflow-and-versioning,
+addy,idea-refine,available-not-installed,,https://github.com/addyosmani/agent-skills,skills/idea-refine,
+addy,incremental-implementation,available-not-installed,,https://github.com/addyosmani/agent-skills,skills/incremental-implementation,
+addy,interview-me,available-not-installed,,https://github.com/addyosmani/agent-skills,skills/interview-me,
+addy,observability-and-instrumentation,available-not-installed,,https://github.com/addyosmani/agent-skills,skills/observability-and-instrumentation,
+addy,performance-optimization,available-not-installed,,https://github.com/addyosmani/agent-skills,skills/performance-optimization,
+addy,planning-and-task-breakdown,available-not-installed,,https://github.com/addyosmani/agent-skills,skills/planning-and-task-breakdown,
+addy,security-and-hardening,available-not-installed,,https://github.com/addyosmani/agent-skills,skills/security-and-hardening,
+addy,shipping-and-launch,available-not-installed,,https://github.com/addyosmani/agent-skills,skills/shipping-and-launch,
+addy,source-driven-development,available-not-installed,,https://github.com/addyosmani/agent-skills,skills/source-driven-development,
+addy,spec-driven-development,available-not-installed,,https://github.com/addyosmani/agent-skills,skills/spec-driven-development,
+addy,test-driven-development,available-not-installed,,https://github.com/addyosmani/agent-skills,skills/test-driven-development,
+addy,using-agent-skills,available-not-installed,,https://github.com/addyosmani/agent-skills,skills/using-agent-skills,

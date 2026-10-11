@@ -1,0 +1,8 @@
+{
+  "collections": {
+    "writing": {
+      "roots": ["@repo/examples/skills"],
+      "description": "Two sample skills shipped with JevShelf"
+    }
+  }
+}

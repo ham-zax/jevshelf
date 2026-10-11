@@ -1,0 +1,14 @@
+name: Python checks
+on:
+  push:
+    branches: [main]
+  pull_request:
+    branches: [main]
+jobs:
+  tests:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: astral-sh/setup-uv@v6
+      - run: bash scripts/bootstrap.sh
+      - run: .venv/bin/python -m pytest -q tests vendor/router/tests

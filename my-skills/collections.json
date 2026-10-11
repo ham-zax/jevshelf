@@ -1,0 +1,20 @@
+{
+  "collections": {
+    "marketing": {"roots": ["@repo/vendor/marketing/skills"], "description": "50 hidden marketing specialists"},
+    "thinking": {"roots": ["@repo/vendor/thinking/skills"], "description": "28 thinking specialists"},
+    "academic": {"roots": ["~/.config/skillshare/skills/vault-academic"], "description": "5 academic research skills"},
+    "emil": {"roots": [
+      "~/.config/skillshare/skills/vault-emil",
+      "~/.config/skillshare/skills/vault-lassejlv/no-vibe-code",
+      "~/.config/skillshare/skills/vault-taste/taste-skill"
+    ], "description": "17 UI design, testing, and aesthetic skills"},
+    "sentry": {"roots": [
+      "~/.config/skillshare/skills/vault-sentry/find-bugs",
+      "~/.config/skillshare/skills/vault-sentry/code-simplifier",
+      "~/.config/skillshare/skills/vault-sentry/security-review",
+      "~/.config/skillshare/skills/vault-sentry/skill-scanner",
+      "~/.config/skillshare/skills/vault-lassejlv/backend-security-audit",
+      "~/.config/skillshare/skills/vault-lassejlv/minimize-api-responses"
+    ], "description": "6 engineering and security specialties"}
+  }
+}

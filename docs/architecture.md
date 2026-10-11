@@ -1,0 +1,51 @@
+# How JevShelf works
+
+A **skill library** can hold dozens or hundreds of specialist `SKILL.md` files without advertising all of them to each agent. Skillshare and JevShelf are complementary, not competing managers:
+
+```text
+                    Skill author repos
+                           |
+                    Skillshare source Git
+                (audit • update • snapshot)
+                           |
+                +----------+------------+
+                |                       |
+         Visible domain shim      Hidden source skills
+         (one SKILL.md)           (vault-*/SKILL.md)
+                |                       |
+     Skillshare sync to hosts            |
+     Codex • Pi • Claude Code...         |
+                |                       |
+       Agent chooses domain             |
+                |                       |
+       jevshelf search ─── TypeSafe Jev + local metadata
+                |                       |
+       chosen ID + SHA-256 ──────────────+
+                |
+       jevshelf load (bounded, read-only)
+                |
+       coding agent handles task
+```
+
+## What is and is not lazy
+
+Native coding agents can see the **name and description of each visible shim** from the start; they don't receive every hidden specialist's complete instructions. JevShelf's `search` returns only metadata with digests, and the caller separately retrieves selected instructions through `load` (read-size bound, SHA-256 continuity). Jev may inspect bounded excerpts for shortlisted candidates during ranking. A selected skill does **not** automatically get executed or override the host's safety rules.
+
+The skill discovery step is the host's native behavior. Skillshare makes the shim visible to each configured target. It does *not* inject the skill into a running model, nor guarantee that any model will activate the shim for every relevant prompt. Start a new agent session after sync.
+
+- **Jev**: optional hosted semantic selection, requiring a valid TypeSafe key. The task, the collection metadata, and bounded excerpts may be sent to TypeSafe. Use lexical mode for local BM25 matching; label it as lexical, not Jev.
+- **Skillshare**: source management, provenance, updates, audit, target filters and symlink sync. These functions are not implemented by JevShelf itself.
+- **JevShelf**: portable collection configuration, selection interface and safe bounded reads, plus a shim generator.
+- **Agent host**: tools, approvals, permissions, reasoning, implementation, tests and final answers. Existing skills and methods still take precedence when applicable.
+
+## Portability
+
+JevShelf is a Python CLI, not a Claude-specific plugin or a universal agent hook. Configure collections using a JSON manifest, then make one ordinary portable `SKILL.md` shim per domain. Skillshare handles distribution to configured supported hosts. The product neither installs Skillshare nor changes its targets automatically. One user's source paths, collection selection and installed skills are never required by another user's installation.
+
+## Dependencies and limits
+
+- Git, Python 3.13 via uv (the bootstrap installs it), and the pinned MIT-licensed `jev-skill-router` 0.4.1 library.
+- A TypeSafe Jev key for live semantic selection; no key required for installation, `collections`, `init`, lexical search or bounded loads.
+- Local accessible skill source files. Shared resources outside a skill directory may need additional project-specific safe access; an academic-only resource reader exists for the maintainer's opt-in integration.
+- Shell scripts and the systemd timer are Linux/WSL-specific. Generic CLI and SKILL.md discovery are portable to other systems with the necessary dependencies.
+- External third-party skills are subject to their own licenses and audit decisions; they're not bundled in the public package.
