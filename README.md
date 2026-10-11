@@ -6,6 +6,8 @@
 
 *A portable, Skillshare-compatible skill shelf with on-demand TypeSafe Jev selection.*
 
+JevShelf **v0.2.0** uses only its own CLI and explicit collection manifests: no old command aliases or implicit personal skill defaults.
+
 [Get started](docs/quickstart.md) · [How it works](docs/architecture.md) · [My Skills](my-skills/README.md) · [Backup guide](my-skills/backups.md)
 
 </div>

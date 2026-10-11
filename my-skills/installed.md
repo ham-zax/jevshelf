@@ -27,10 +27,10 @@ The companion CSV is the complete row-level ledger.
 | baseline | find-skills | local |
 | baseline | impeccable | local |
 | baseline | jevify | github.com/altryne/jevify |
+| baseline | jevshelf-marketing | jevshelf:shims/marketing |
+| baseline | jevshelf-thinking | jevshelf:shims/thinking |
 | baseline | khiip | local |
 | baseline | open-websearch | local |
-| baseline | pandora-marketing | jevshelf:shims/marketing |
-| baseline | pandora-thinking | jevshelf:shims/thinking |
 | baseline | provenfast | local |
 | baseline | satori | local |
 | baseline | skillshare | github.com/runkids/skillshare/skills/skillshare |

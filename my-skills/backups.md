@@ -16,6 +16,7 @@ Only a completed directory with `backup.ok` counts toward the two-day interval. 
 
 | Date (local) | Snapshot | Notes |
 |---|---|---|
+| 2026-10-12 | `jevshelf-20261012-013914` | Verified v0.2.0 clean migration: new JevShelf shims, all 28 hidden skills, full Git and working-tree archives |
 | 2026-10-12 | `jevshelf-20261012-012513` | Most recent snapshot after upgrading Skillshare to v0.25.5 |
 | 2026-10-12 | `jevshelf-20261012-011734` | New Git + working-tree snapshot format; includes academic resource bundle |
 | 2026-10-12 | `jev-vault-20261012-010901` | Previous verified Git-bundle-only format, before productization |
@@ -37,7 +38,7 @@ Timer is calendar-based with `Persistent=true` and is safe to reinstall. It chec
 ## Manual backup and recovery
 
 ```bash
-bash scripts/backup-skillshare-vault.sh
+bash scripts/backup-skillshare.sh
 bash scripts/list-backups.sh
 ```
 

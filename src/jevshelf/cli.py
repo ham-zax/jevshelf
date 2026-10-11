@@ -17,10 +17,6 @@ from jev_skill_router.retrieval import MetadataIndex
 from jev_skill_router.router import Router
 
 
-COLLECTIONS = ("marketing", "thinking", "academic", "emil", "sentry")
-# Only specialist Sentry capabilities are automatically routable; the whole
-# upstream repository remains intact outside agent discovery.
-SENTRY_SPECIALISTS = ("find-bugs", "code-simplifier", "security-review", "skill-scanner")
 MAX_JEV_RESULTS = 3
 
 
@@ -29,14 +25,7 @@ def _config_file() -> Path:
 
 
 def _specs() -> dict:
-    """Read a user-owned collection manifest; no user's skills ship by default."""
-    # Legacy per-collection override vars are used by older shims and tests.
-    # A user-selected manifest always takes precedence.
-    if not os.environ.get("JEVSHELF_CONFIG") and any(
-        key.startswith("PANDORA_") and (key.endswith("_ROOT") or key == "PANDORA_SKILLS_SOURCE_DIR")
-        for key in os.environ
-    ):
-        return {}
+    """Read only the user's explicit collection manifest."""
     path = _config_file()
     if not path.is_file():
         return {}
@@ -46,6 +35,7 @@ def _specs() -> dict:
         if not isinstance(collections, dict) or any(
             not isinstance(name, str) or not isinstance(spec, dict)
             or not isinstance(spec.get("roots"), list)
+            or not spec["roots"]
             or not all(isinstance(root, str) and root.strip() for root in spec["roots"])
             for name, spec in collections.items()
         ):
@@ -64,13 +54,7 @@ def _root_path(raw: str) -> Path:
 
 
 def _collection_names() -> tuple[str, ...]:
-    configured = _specs()
-    # Legacy collections remain supported for old local deployments and tests.
-    if configured:
-        return tuple(configured)
-    if any(key.startswith("PANDORA_") for key in os.environ):
-        return COLLECTIONS
-    return ()
+    return tuple(_specs())
 
 
 def _init_config() -> dict:
@@ -84,72 +68,35 @@ def _init_config() -> dict:
 
 
 def _collection_root(name: str) -> Path:
-    if name in _specs():
-        roots = _specs()[name]["roots"]
-        if not roots:
-            raise RouterError(f"Collection '{name}' needs at least one root")
-        return _root_path(roots[0])
-    env_name = f"PANDORA_{name.upper()}_ROOT"
-    configured = os.environ.get(env_name)
-    if configured:
-        return Path(configured).expanduser().absolute()
-    project_root = Path(__file__).resolve().parents[2]
-    skillshare_vault = {
-        "academic": "vault-academic",
-        "emil": "vault-emil",
-        "sentry": "vault-sentry",
-    }.get(name)
-    if skillshare_vault:
-        source = Path(os.environ.get("PANDORA_SKILLS_SOURCE_DIR", "~/.config/skillshare/skills")).expanduser()
-        return (source / skillshare_vault).absolute()
-    return (project_root / "vendor" / name / "skills").absolute()
+    configured = _specs().get(name)
+    if configured is None:
+        raise RouterError(f"Unknown collection '{name}'; configure it in {_config_file()}")
+    return _root_path(configured["roots"][0])
 
 
 def _collection_roots(name: str) -> list[str]:
-    if name in _specs():
-        return [str(_root_path(path)) for path in _specs()[name]["roots"]]
-    root = _collection_root(name)
-    if name in ("emil", "sentry"):
-        skillshare_source = Path(
-            os.environ.get("PANDORA_SKILLS_SOURCE_DIR", "~/.config/skillshare/skills")
-        ).expanduser().absolute()
-        shared = skillshare_source / "vault-lassejlv"
-        additions = {
-            "emil": ("no-vibe-code",),
-            "sentry": ("backend-security-audit", "minimize-api-responses"),
-        }[name]
-        primary = ([str(root / skill) for skill in SENTRY_SPECIALISTS]
-                   if name == "sentry" else [str(root)])
-        specialist_roots = primary + [str(shared / skill) for skill in additions]
-        if name == "emil":
-            specialist_roots.append(str(skillshare_source / "vault-taste" / "taste-skill"))
-        return specialist_roots
-    return [str(root)]
+    configured = _specs().get(name)
+    if configured is None:
+        raise RouterError(f"Unknown collection '{name}'")
+    return [str(_root_path(path)) for path in configured["roots"]]
 
 
 def _catalog(name: str) -> Catalog:
     return Catalog(_collection_roots(name))
 
 
-def _source_reference(skill, root: Path, name: str = "") -> str:
-    """Do not leak absolute paths; distinguish skills in the shared managed vault."""
+def _source_reference(skill, root: Path, name: str) -> str:
+    """Return source locations relative to approved configured roots only."""
     try:
         return skill.source.relative_to(root.resolve()).as_posix()
     except ValueError:
-        if name in _specs():
-            for idx, configured_root in enumerate(_collection_roots(name)):
-                base = Path(configured_root).resolve()
-                try:
-                    return f"root{idx}:" + skill.source.relative_to(base).as_posix()
-                except ValueError:
-                    pass
-        skillshare_source = Path(
-            os.environ.get("PANDORA_SKILLS_SOURCE_DIR", "~/.config/skillshare/skills")
-        ).expanduser().absolute().resolve()
-        try:
-            return "skillshare:" + skill.source.relative_to(skillshare_source).as_posix()
-        except ValueError as exc:
-            raise RouterError("Selected skill does not belong to the approved collection") from exc
+        for idx, configured_root in enumerate(_collection_roots(name)):
+            base = Path(configured_root).resolve()
+            try:
+                return f"root{idx}:" + skill.source.relative_to(base).as_posix()
+            except ValueError:
+                continue
+        raise RouterError("Selected skill does not belong to the approved collection")
 
 
 def _metadata(skill, root: Path, name: str) -> dict:
@@ -315,44 +262,26 @@ def _load(args: argparse.Namespace) -> dict:
 
 
 def _load_resource(args: argparse.Namespace) -> dict:
-    """Read a pinned academic repository resource without escaping its root.
-
-    Academic skills refer to shared/references and sibling agents/scripts.
-    Those files cannot be read with the per-skill loader, which intentionally
-    forbids parent traversal. This is an independent, read-only access path.
-    """
-    if args.collection != "academic":
-        raise RouterError("Repository resources are supported only for academic")
-    # Academic shared references and scripts live outside the five individual
-    # skill folders. The pinned source checkout supplies them read-only.
-    root = Path(os.environ.get(
-        "PANDORA_ACADEMIC_RESOURCE_ROOT",
-        str(Path(__file__).resolve().parents[2] / "vendor" / "academic"),
-    )).expanduser().absolute()
-    # Skillshare independently updates installed skills, so refuse stale or
-    # mismatched shared resources rather than mixing incompatible repo versions.
-    for installed_skill in _catalog("academic").skills.values():
-        original = root / installed_skill.name / "SKILL.md"
-        if not original.is_file() or original.read_bytes() != installed_skill.source.read_bytes():
-            raise RouterError(
-                "Academic Skillshare skills and pinned shared resources differ; align their upstream revisions"
-            )
+    """Read explicitly allowed repository-level resources without directory escape."""
+    spec = _specs()[args.collection]
+    raw_root = spec.get("resources_root")
+    allowed = spec.get("resources_allowlist")
+    if not isinstance(raw_root, str) or not isinstance(allowed, list) or not allowed:
+        raise RouterError("This collection does not configure repository resources")
+    if not all(isinstance(v, str) and v and "/" not in v and v not in (".", "..") for v in allowed):
+        raise RouterError("Invalid collection resource allowlist")
+    root = _root_path(raw_root)
     requested = args.file
     relative = Path(requested)
-    allowed_top = {
-        "shared", "scripts", "agents", "academic-paper",
-        "academic-paper-reviewer", "academic-pipeline",
-        "deep-research", "sr-screener",
-    }
     if (
         not requested or "\\" in requested or relative.is_absolute()
         or PureWindowsPath(requested).drive
-        or len(relative.parts) < 2 or relative.parts[0] not in allowed_top
+        or len(relative.parts) < 2 or relative.parts[0] not in allowed
         or any(part in (".", "..") or part.startswith(".") for part in relative.parts)
         or any(part.lower() in BLOCKED_NAMES for part in relative.parts)
         or relative.suffix.lower() not in TEXT_SUFFIXES
     ):
-        raise RouterError("Only allowed academic repository-relative text files are supported")
+        raise RouterError("Only allowlisted repository-relative text files are supported")
     if args.offset < 0 or not 1 <= args.limit <= 50000:
         raise RouterError("Invalid read range")
     if args.offset and not args.expected_digest:
@@ -362,10 +291,15 @@ def _load_resource(args: argparse.Namespace) -> dict:
         or any(c not in "0123456789abcdef" for c in args.expected_digest)
     ):
         raise RouterError("expected_digest must be a lowercase SHA-256 digest")
+    if spec.get("verify_resources_against_skills", False):
+        for installed_skill in _catalog(args.collection).skills.values():
+            original = root / installed_skill.name / "SKILL.md"
+            if not original.is_file() or original.read_bytes() != installed_skill.source.read_bytes():
+                raise RouterError("Collection skill files and repository resources differ; align their revisions")
     target = root / relative
     Catalog._no_symlinks(target)
     if not target.resolve().is_relative_to(root.resolve()):
-        raise RouterError("Path escapes the academic repository")
+        raise RouterError("Path escapes the configured resource repository")
     content = Catalog._text(target)
     digest = hashlib.sha256(content.encode("utf-8")).hexdigest()
     if args.expected_digest and args.expected_digest != digest:
@@ -418,9 +352,9 @@ def _parser() -> argparse.ArgumentParser:
     load.add_argument("--expected-digest")
 
     resource = commands.add_parser(
-        "load-resource", help="Read a bounded academic repository-level reference"
+        "load-resource", help="Read an explicitly configured, bounded repository-level reference"
     )
-    resource.add_argument("--collection", choices=("academic",), required=True)
+    resource.add_argument("--collection", choices=_collection_names(), required=True)
     resource.add_argument("--file", required=True)
     resource.add_argument("--offset", type=int, default=0)
     resource.add_argument("--limit", type=int, default=12000)

@@ -9,7 +9,7 @@ See [skill-inventory.md](installed.md) and [skill-inventory.csv](installed.csv) 
 - **Skillshare** is the manager: imports audited skill directories from GitHub, stores them in `~/.config/skillshare/skills`, handles group updates and sync to 7 configured targets. Use it for every active engineering system; do not also install a native plugin for the same pack (duplicate discovery).
 - **Aegis/Matt/Addy**: exactly one is allowed to direct the engineering lifecycle (requirements → design → implementation → review → completion). Other specialist skills may inform individual steps without replacing the canonical owner's artifacts or handoffs.
 - **Claive** remains the worker/model orchestration mechanism; it is not one of these three engineering methods. Existing `claive-orchestration` and `claive-routing-codex` are left intact.
-- **Pandora's existing Marketing/Thinking shims** stay independent. This phase does not rename or move them. Jev is not used to mix the three whole engineering frameworks at runtime.
+- **JevShelf Marketing/Thinking shims** stay independent and use the canonical `jevshelf` command. Jev is not used to mix the three whole engineering frameworks at runtime.
 - User/project instructions outrank all optional skill-method suggestions. A small task need not become a lengthy plan, automatic TDD, or mandatory review.
 
 ## Current Aegis installation

@@ -51,7 +51,7 @@ Those commands work only after acquiring the underlying Skillshare sources. They
 | Update specialist vaults | [vault-management.md](vault-management.md) | Per-group Skillshare updates, audit caveats, rollback |
 | Rebuild original source checkouts | [restore-checkouts.sh](scripts/restore-checkouts.sh) | Pinned upstreams, not installed automatically for other users |
 | Refresh inventory | `python3 my-skills/scripts/refresh-inventory.py` | Rewrites only `installed.md` and `installed.csv` |
-| Jevify and TypeSafe key | [jevify-typesafe.md](jevify-typesafe.md) | Existing environment credentials, no stored keys |
+| Jevify and TypeSafe key | [typesafe-api.md](typesafe-api.md) | Existing environment credentials, no stored keys |
 
 Skillshare **v0.25.5** is installed as of 12 October 2026. Keeping it current is a **separate deliberate step**: check `skillshare --version`, review `skillshare upgrade --help`, take a source backup, upgrade the CLI, run `skillshare doctor` and `skillshare sync --dry-run -g`. I don't automatically install unreviewed third-party skill updates just because an upstream repository moved.
 
@@ -67,8 +67,8 @@ The real archives are *not in GitHub*. See [backups.md](backups.md) for the sche
 
 ```bash
 bash scripts/list-backups.sh
-bash scripts/backup-skillshare-vault.sh            # Back up now
-bash scripts/backup-skillshare-vault.sh --if-due   # Back up if >= 48h since previous success
+bash scripts/backup-skillshare.sh            # Back up now
+bash scripts/backup-skillshare.sh --if-due   # Back up if >= 48h since previous success
 systemctl --user status jevshelf-backup.timer      # See automatic timer
 ```
 

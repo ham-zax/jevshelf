@@ -1,10 +1,34 @@
 import json
 import os
+
+import pytest
 from pathlib import Path
 
 from jev_skill_router.router import Router
 
 from jevshelf import cli
+
+
+@pytest.fixture(autouse=True)
+def isolated_manifest(tmp_path, monkeypatch):
+    manifest = tmp_path / "collections.json"
+    manifest.write_text(json.dumps({"collections": {}}))
+    monkeypatch.setenv("JEVSHELF_CONFIG", str(manifest))
+
+
+def configure_collection(name: str, roots: list[Path], **extra) -> None:
+    manifest = Path(os.environ["JEVSHELF_CONFIG"])
+    payload = json.loads(manifest.read_text())
+    payload["collections"][name] = {"roots": [str(p) for p in roots], **extra}
+    manifest.write_text(json.dumps(payload))
+
+
+def configure_vault(source: Path) -> None:
+    configure_collection("academic", [source / "vault-academic"])
+    configure_collection("emil", [source / "vault-emil", source / "vault-lassejlv/no-vibe-code", source / "vault-taste/taste-skill"])
+    configure_collection("sentry", [source / f"vault-sentry/{name}" for name in (
+        "find-bugs", "code-simplifier", "security-review", "skill-scanner"
+    )] + [source / "vault-lassejlv/backend-security-audit", source / "vault-lassejlv/minimize-api-responses"])
 
 
 def write_skill(root: Path, directory: str, name: str, description: str, body: str) -> Path:
@@ -44,8 +68,8 @@ def test_search_is_metadata_only_and_load_supports_pagination(tmp_path, monkeypa
     references = marketing / "cold-email" / "references"
     references.mkdir()
     (references / "guide.md").write_text("Keep the full relative path.", encoding="utf-8")
-    monkeypatch.setenv("PANDORA_MARKETING_ROOT", str(marketing))
-    monkeypatch.setenv("PANDORA_THINKING_ROOT", str(thinking))
+    configure_collection("marketing", [marketing])
+    configure_collection("thinking", [thinking])
 
     code, search = invoke(
         capsys,
@@ -110,8 +134,8 @@ def test_collections_and_no_match_are_explicit(tmp_path, monkeypatch, capsys):
     thinking = tmp_path / "thinking"
     write_skill(marketing, "email", "email", "Write marketing email copy.", "Email content.")
     write_skill(thinking, "systems", "thinking-systems", "Map feedback loops.", "Systems content.")
-    monkeypatch.setenv("PANDORA_MARKETING_ROOT", str(marketing))
-    monkeypatch.setenv("PANDORA_THINKING_ROOT", str(thinking))
+    configure_collection("marketing", [marketing])
+    configure_collection("thinking", [thinking])
 
     code, collections = invoke(capsys, ["collections"])
     assert code == 0
@@ -141,8 +165,8 @@ def test_plan_is_local_and_jev_results_are_metadata_only(tmp_path, monkeypatch, 
     thinking = tmp_path / "thinking"
     write_skill(marketing, "ads", "ads", "Plan paid advertising campaigns.", "Private ad instructions.")
     write_skill(thinking, "systems", "thinking-systems", "Map feedback loops.", "Private thinking instructions.")
-    monkeypatch.setenv("PANDORA_MARKETING_ROOT", str(marketing))
-    monkeypatch.setenv("PANDORA_THINKING_ROOT", str(thinking))
+    configure_collection("marketing", [marketing])
+    configure_collection("thinking", [thinking])
     monkeypatch.delenv("TYPESAFE_API_KEY", raising=False)
     monkeypatch.setenv("JEV_API_KEY", "test-key-never-output")
 
@@ -194,7 +218,7 @@ def test_plan_is_local_and_jev_results_are_metadata_only(tmp_path, monkeypatch, 
 def test_selected_digest_prevents_changed_skill_load(tmp_path, monkeypatch, capsys):
     root = tmp_path / "marketing"
     file = write_skill(root, "cro", "cro", "Improve conversions.", "First instructions.")
-    monkeypatch.setenv("PANDORA_MARKETING_ROOT", str(root))
+    configure_collection("marketing", [root])
     code, result = invoke(capsys, [
         "search", "--collection", "marketing", "--mode", "lexical",
         "--task", "Improve conversions",
@@ -222,7 +246,7 @@ def test_selected_digest_prevents_changed_skill_load(tmp_path, monkeypatch, caps
 def test_jev_error_never_silently_returns_lexical_results(tmp_path, monkeypatch, capsys):
     marketing = tmp_path / "marketing"
     write_skill(marketing, "cro", "cro", "Improve conversions.", "Example body.")
-    monkeypatch.setenv("PANDORA_MARKETING_ROOT", str(marketing))
+    configure_collection("marketing", [marketing])
     monkeypatch.setenv("JEV_API_KEY", "fixture-key")
     from jev_skill_router.config import RouterError
     def unavailable(self, state, budget):
@@ -240,7 +264,7 @@ def test_jev_error_never_silently_returns_lexical_results(tmp_path, monkeypatch,
 
 def test_skillshare_vault_collections_are_disjoint(tmp_path, monkeypatch, capsys):
     source = tmp_path / 'skillshare-source'
-    monkeypatch.setenv('PANDORA_SKILLS_SOURCE_DIR', str(source))
+    configure_vault(source)
     write_skill(source / 'vault-academic', 'deep-research', 'deep-research',
                 'Academic literature review and citation research.', 'Academic content')
     write_skill(source / 'vault-emil', 'break-ui', 'break-ui',
@@ -275,8 +299,10 @@ def test_academic_shared_resource_read_is_safe_and_consistent(tmp_path, monkeypa
     shared.mkdir(parents=True)
     (shared / 'methods.md').write_text('Original shared material.', encoding='utf8')
     (shared / 'private.md').symlink_to(shared / 'methods.md')
-    monkeypatch.setenv('PANDORA_SKILLS_SOURCE_DIR', str(source))
-    monkeypatch.setenv('PANDORA_ACADEMIC_RESOURCE_ROOT', str(repo))
+    configure_vault(source)
+    configure_collection("academic", [academic_source], resources_root=str(repo),
+                         resources_allowlist=["shared", "scripts", "agents", "academic-paper"],
+                         verify_resources_against_skills=True)
     code, result = invoke(capsys, ['load-resource', '--collection', 'academic',
                                    '--file', 'shared/references/methods.md', '--limit', '10'])
     assert code == 0
@@ -300,7 +326,7 @@ def test_academic_shared_resource_read_is_safe_and_consistent(tmp_path, monkeypa
 
 def test_lassejlv_specialists_merge_into_existing_jev_collections(tmp_path, monkeypatch, capsys):
     source = tmp_path / "skillshare"
-    monkeypatch.setenv("PANDORA_SKILLS_SOURCE_DIR", str(source))
+    configure_vault(source)
     write_skill(source / "vault-emil", "animate", "animate", "Animate frontend UI.", "Motion guidance.")
     for skill_name in ("find-bugs", "code-simplifier", "security-review", "skill-scanner"):
         write_skill(source / "vault-sentry", skill_name, skill_name, f"{skill_name} relevant code.", "Sentry guidance.")
@@ -323,7 +349,7 @@ def test_lassejlv_specialists_merge_into_existing_jev_collections(tmp_path, monk
                                        "--mode", "lexical", "--task", task, "--max-results", "3"])
         assert code == 0
         chosen = next(skill for skill in result["selected"] if skill["name"] == name)
-        assert chosen["source"] == f"skillshare:vault-lassejlv/{name}/SKILL.md"
+        assert chosen["source"].startswith("root") and chosen["source"].endswith("SKILL.md")
         code, loaded = invoke(capsys, ["load", "--collection", collection,
                                        "--id", chosen["id"], "--expected-digest", chosen["digest"]])
         assert code == 0
@@ -333,7 +359,7 @@ def test_lassejlv_specialists_merge_into_existing_jev_collections(tmp_path, monk
 
 def test_taste_skill_joins_ui_collection_without_new_native_leaf(tmp_path, monkeypatch, capsys):
     src = tmp_path / 'skillshare'
-    monkeypatch.setenv('PANDORA_SKILLS_SOURCE_DIR', str(src))
+    configure_vault(src)
     write_skill(src / 'vault-emil', 'animate', 'animate',
                 'Add meaningful web animation.', 'Existing UI library.')
     write_skill(src / 'vault-lassejlv', 'no-vibe-code', 'no-vibe-code',
@@ -348,7 +374,7 @@ def test_taste_skill_joins_ui_collection_without_new_native_leaf(tmp_path, monke
                                    '--task', 'premium landing page brand direction', '--max-results', '3'])
     assert code == 0
     skill = next(s for s in found['selected'] if s['name'] == 'design-taste-frontend')
-    assert skill['source'] == 'skillshare:vault-taste/taste-skill/SKILL.md'
+    assert skill['source'] == 'root2:SKILL.md'
     code, loaded = invoke(capsys, ['load', '--collection', 'emil', '--id', skill['id'],
                                     '--expected-digest', skill['digest']])
     assert code == 0
@@ -376,3 +402,15 @@ def test_user_manifest_is_independent_and_labels_mixed_roots(tmp_path, monkeypat
     code, result = invoke(capsys, ['load', '--collection', 'custom', '--id', selected['id'],
                                    '--expected-digest', selected['digest']])
     assert code == 0 and 'Beta guidance.' in result['content']
+
+
+def test_no_implicit_user_collections_and_first_time_init(tmp_path, monkeypatch, capsys):
+    """Public installation has no personal collection defaults or hidden roots."""
+    path = tmp_path / "first-config.json"
+    monkeypatch.setenv("JEVSHELF_CONFIG", str(path))
+    code, before = invoke(capsys, ["collections"])
+    assert code == 0 and before["collections"] == {}
+    code, result = invoke(capsys, ["init"])
+    assert code == 0 and result["status"] == "created"
+    code, after = invoke(capsys, ["collections"])
+    assert code == 0 and after["collections"]["writing"]["skills"] == 2

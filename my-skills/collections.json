@@ -2,7 +2,7 @@
   "collections": {
     "marketing": {"roots": ["@repo/vendor/marketing/skills"], "description": "50 hidden marketing specialists"},
     "thinking": {"roots": ["@repo/vendor/thinking/skills"], "description": "28 thinking specialists"},
-    "academic": {"roots": ["~/.config/skillshare/skills/vault-academic"], "description": "5 academic research skills"},
+    "academic": {"roots": ["~/.config/skillshare/skills/vault-academic"], "description": "5 academic research skills", "resources_root": "@repo/vendor/academic", "resources_allowlist": ["shared", "scripts", "agents", "academic-paper", "academic-paper-reviewer", "academic-pipeline", "deep-research", "sr-screener"], "verify_resources_against_skills": true},
     "emil": {"roots": [
       "~/.config/skillshare/skills/vault-emil",
       "~/.config/skillshare/skills/vault-lassejlv/no-vibe-code",

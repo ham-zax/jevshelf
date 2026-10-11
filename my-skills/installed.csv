@@ -10,10 +10,10 @@ baseline,codebase-memory,installed,codebase-memory,local,codebase-memory,Existin
 baseline,find-skills,installed,find-skills,local,find-skills,Existing skill; preserve during engineering swaps
 baseline,impeccable,installed,impeccable,local,impeccable,Existing skill; preserve during engineering swaps
 baseline,jevify,installed,jevify,github.com/altryne/jevify,jevify,Existing skill; preserve during engineering swaps
+baseline,jevshelf-marketing,installed,jevshelf-marketing,jevshelf:shims/marketing,jevshelf-marketing,Existing skill; preserve during engineering swaps
+baseline,jevshelf-thinking,installed,jevshelf-thinking,jevshelf:shims/thinking,jevshelf-thinking,Existing skill; preserve during engineering swaps
 baseline,khiip,installed,khiip,local,khiip,Existing skill; preserve during engineering swaps
 baseline,open-websearch,installed,open-websearch,local,open-websearch,Existing skill; preserve during engineering swaps
-baseline,pandora-marketing,installed,pandora-marketing,jevshelf:shims/marketing,pandora-marketing,Existing skill; preserve during engineering swaps
-baseline,pandora-thinking,installed,pandora-thinking,jevshelf:shims/thinking,pandora-thinking,Existing skill; preserve during engineering swaps
 baseline,provenfast,installed,provenfast,local,provenfast,Existing skill; preserve during engineering swaps
 baseline,satori,installed,satori,local,satori,Existing skill; preserve during engineering swaps
 baseline,skillshare,installed,skillshare,github.com/runkids/skillshare/skills/skillshare,skillshare,Existing skill; preserve during engineering swaps

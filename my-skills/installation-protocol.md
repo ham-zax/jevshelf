@@ -58,7 +58,7 @@ Before global mutations, inspect both Git trees and make a source checkpoint if 
 git -C ~/repo/jevshelf status --short
 git -C ~/.config/skillshare/skills status --short
 cd ~/repo/jevshelf
-bash scripts/backup-skillshare-vault.sh
+bash scripts/backup-skillshare.sh
 ```
 
 The backup script requires a clean committed Skillshare source and makes a Git bundle of its actual contents and a snapshot of `~/.config/skillshare/config.yaml`. A target-folder backup alone cannot recover source files backed by merge-mode symlinks.
@@ -92,17 +92,17 @@ Existing Marketing and Thinking collections retain their current paths and shims
 
 New `vault-*` groups must remain excluded in **every** configured Skillshare target. Check `~/.config/skillshare/config.yaml` and `skillshare sync --dry-run -g` before syncing. Do **not** add a new global shim for every leaf.
 
-The CLI uses `_collection_roots` in `src/pandora_skills/cli.py` to build a collection from specific source roots; new leaves may require an explicit allowlisted path. Update the *existing* shim description only if a new capability must be discoverable. Search returns metadata, then `load --expected-digest` returns bounded full text. Preserve scripts and reference files within the leaf's original directory; external repo resources need an explicitly safe reader, not arbitrary `../` traversal.
+The CLI uses `_collection_roots` in `src/jevshelf/cli.py` to build a collection from specific source roots; new leaves may require an explicit allowlisted path. Update the *existing* shim description only if a new capability must be discoverable. Search returns metadata, then `load --expected-digest` returns bounded full text. Preserve scripts and reference files within the leaf's original directory; external repo resources need an explicitly safe reader, not arbitrary `../` traversal.
 
 ### 4. Verify behavior, scope and restoration
 
-- Run `pandora-skills collections`; confirm the new leaf is indexed **once** and unrelated collections remain unchanged.
+- Run `jevshelf collections`; confirm the new leaf is indexed **once** and unrelated collections remain unchanged.
 - Run a focused **lexical metadata** lookup. When Jev is configured and the request authorizes a live probe, run a live `--mode jev` request on a representative task and verify `selected`, `no_match`, or `uncertain` honestly.
-- Call `pandora-skills load --collection NAME --id <returned id> --expected-digest <returned digest>`. Verify that referenced text scripts and files are present; only execute a helper if the user request authorizes it.
+- Call `jevshelf load --collection NAME --id <returned id> --expected-digest <returned digest>`. Verify that referenced text scripts and files are present; only execute a helper if the user request authorizes it.
 - Run focused existing project tests when implementation code changed; use a stronger integration test when the changed behavior warrants it. Do not impose blanket TDD.
 - Run `skillshare sync --dry-run -g` and inspect changes, then `skillshare sync -g`. Verify allowed direct shims appeared and **no `vault-*` leaves** appeared in any target directory.
-- Refresh `my-skills/installed.csv` and `my-skills/installed.md` with `python3 scripts/refresh-skill-inventory.py`, and update `my-skills/vault-management.md` with any new group, limitations, findings, and provenance.
-- Commit only intended changes to the **project repository** and the **Skillshare source Git repository**, separately; no push without a user request. After Skillshare source commit, run `bash scripts/backup-skillshare-vault.sh` and `git bundle verify`. The bundle must include the hidden leaves, not just the target symlinks.
+- Refresh `my-skills/installed.csv` and `my-skills/installed.md` with `python3 my-skills/scripts/refresh-inventory.py`, and update `my-skills/vault-management.md` with any new group, limitations, findings, and provenance.
+- Commit only intended changes to the **project repository** and the **Skillshare source Git repository**, separately; no push without a user request. After Skillshare source commit, run `bash scripts/backup-skillshare.sh` and `git bundle verify`. The bundle must include the hidden leaves, not just the target symlinks.
 
 ### 5. Report the result and stop
 

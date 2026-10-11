@@ -7,12 +7,18 @@ systemctl --user is-system-running >/dev/null 2>&1 || {
 }
 units="$HOME/.config/systemd/user"
 mkdir -p "$units"
+# An optional source checkout outside Skillshare can be bundled, too.
+extra_env=""
+if [[ -n "${JEVSHELF_EXTRA_GIT_ROOT:-}" ]]; then
+  extra_env="Environment=JEVSHELF_EXTRA_GIT_ROOT=${JEVSHELF_EXTRA_GIT_ROOT}"
+fi
 cat > "$units/jevshelf-backup.service" <<UNIT
 [Unit]
 Description=JevShelf recoverable local Skillshare backup
 [Service]
 Type=oneshot
-ExecStart=$ROOT/scripts/backup-skillshare-vault.sh --if-due
+$extra_env
+ExecStart=$ROOT/scripts/backup-skillshare.sh --if-due
 UNIT
 cat > "$units/jevshelf-backup.timer" <<'UNIT'
 [Unit]

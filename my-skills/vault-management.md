@@ -14,7 +14,7 @@ The 28 managed hidden leaves reside directly under the Skillshare source library
 | `emil` and `sentry` | `vault-lassejlv/` | lassejlv/skills | `07d8ada0d9cc14baa814525e29fabc4682c7c370` |
 | `emil` | `vault-taste/` | Leonxlnx/taste-skill | `717446e07a78d4e6d7918b1fde1a263378eebac9` |
 
-All seven existing Skillshare targets have an extra **`vault-*`** exclusion. Original exclusions remain intact. Only the three discoverable, locally managed shims `academic-research`, `ui-craft`, and `code-specialists` were added to target skills. The previous `pandora-marketing` and `pandora-thinking` shims remain as before. The command `pandora-skills` uses Skillshare's *source* group to read metadata and selected skill bodies, not a separately copied hidden vault.
+All seven existing Skillshare targets have an extra **`vault-*`** exclusion. Original exclusions remain intact. The five discoverable, locally managed JevShelf shims are `jevshelf-marketing`, `jevshelf-thinking`, `academic-research`, `ui-craft`, and `code-specialists`. All source leaf groups remain hidden by `vault-*` exclusions. The command `jevshelf` uses Skillshare's *source* group to read metadata and selected skill bodies, not a separately copied hidden vault.
 
 The original Sentry subset remains exactly `find-bugs`, `code-simplifier`, `security-review`, and `skill-scanner`. The other Sentry skills are not routed. The `sentry` Jev collection additionally includes `backend-security-audit` and `minimize-api-responses` from Skillshare group `vault-lassejlv`; `emil` adds `no-vibe-code` from that group and `design-taste-frontend` from `vault-taste/`. **There is no additional native Jev shim; none of these four supplementary routed leaves is directly installed.**
 
@@ -28,16 +28,16 @@ skillshare update --group vault-emil -g
 skillshare audit --group vault-emil -g --no-tui
 skillshare sync --dry-run -g
 skillshare sync -g
-python3 ~/repo/jevshelf/scripts/refresh-skill-inventory.py
+python3 ~/repo/jevshelf/my-skills/scripts/refresh-inventory.py
 ```
 
 Apply the same steps to `vault-sentry`, `vault-academic`, `vault-lassejlv`, or `vault-taste`. If an update adds new Sentry skills, **do not** add them: the router only permits the original four. No default auto-update has been enabled.
 
 ### Academic supporting files
 
-Academic's five Skillshare-managed skill folders reference shared resource trees (`shared/`, `scripts/`, `agents/`, and sibling academic skill files). Skillshare's per-skill installer does not carry the whole repository tree. The original **pinned** Git checkout at `~/repo/jevshelf/vendor/academic` therefore remains the read-only resource provider. Run `pandora-skills load-resource --collection academic --file shared/references/<name>.md` to page safely through these text resources, and continue with the returned content digest. This command does not execute scripts or dispatch agents.
+Academic's five Skillshare-managed skill folders reference shared resource trees (`shared/`, `scripts/`, `agents/`, and sibling academic skill files). Skillshare's per-skill installer does not carry the whole repository tree. The original **pinned** Git checkout at `~/repo/jevshelf/vendor/academic` therefore remains the read-only resource provider. Run `jevshelf load-resource --collection academic --file shared/references/<name>.md` to page safely through these text resources, and continue with the returned content digest. This command does not execute scripts or dispatch agents.
 
-Every academic resource read first verifies that all five installed `SKILL.md` source files exactly match that checkout. If Skillshare updates academic leaf files while the pinned checkout stays old, this check fails explicitly. Align the checkout to the same reviewed upstream revision (and update the pinned SHA in `scripts/bootstrap.sh`) before resuming shared resource reads. This prevents mixing incompatible versions. The GitHub repo and recorded SHA make these resources recoverable even if a local checkout disappears.
+Every academic resource read first verifies that all five installed `SKILL.md` source files exactly match that checkout. If Skillshare updates academic leaf files while the pinned checkout stays old, this check fails explicitly. Align the checkout to the same reviewed upstream revision (and update the pinned revision in `my-skills/scripts/restore-checkouts.sh`) before resuming shared resource reads. This prevents mixing incompatible versions. The GitHub repo and recorded SHA make these resources recoverable even if a local checkout disappears.
 
 ### Reviewed audit findings
 
@@ -57,7 +57,7 @@ For new skills, follow [the installation protocol](installation-protocol.md) and
 
 The durable Skillshare-managed source is Git-tracked under `~/.config/skillshare/skills`. After a successful installation, commit `.metadata.json`, the three shim directories, and the `vault-*/` source groups. Keep a separate **Git bundle** of the committed source under `~/.local/share/skillshare/backups/`, along with a snapshot of `~/.config/skillshare/config.yaml` (which records the target filters). Keep the project Git checkout and pinned vendor repository SHAs for the full research support tree.
 
-Suggested post-update recovery checkpoint (or simply run `bash scripts/backup-skillshare-vault.sh` after committing the Skillshare source):
+Suggested post-update recovery checkpoint (or simply run `bash scripts/backup-skillshare.sh` after committing the Skillshare source):
 
 ```bash
 stamp=$(date +%Y%m%d-%H%M%S)
@@ -95,4 +95,4 @@ The `no-yak-shaving` skill was inspected in full, but not installed; its proport
 - Taste imported under the normal audit policy with two HIGH findings (`SKILL.md:133` DNS heuristic and `SKILL.md:892` agent directive heuristic) and an INFO interpreter warning. These were not blocking and remain visible for review.
 - `vault-*` exclusions already protect all seven targets. Aegis remains canonical. Updating uses `skillshare update --group vault-taste -g` for Taste and `skillshare update jevify -g` for Jevify, with dry-run, audit, test and Git backup.
 
-**Jevify TypeSafe environment:** See [Jevify TypeSafe setup](jevify-typesafe.md). The login shell exports both `JEV_API_KEY` and `TYPESAFE_API_KEY` with the same value, using one key declaration in `~/.bashrc`. Jevify helpers may run directly. The `jevify-typesafe` wrapper remains optional for processes that did not inherit the environment. No key value is committed to the project or Skillshare source. After updates, recheck the local skill note.
+**Jevify TypeSafe environment:** See [Jevify TypeSafe setup](typesafe-api.md). The login shell exports both `JEV_API_KEY` and `TYPESAFE_API_KEY` with the same value, using one key declaration in `~/.bashrc`. Jevify helpers may run directly. Launch agents with the normal login-shell TypeSafe environment; no separate wrapper is installed. No key value is committed to the project or Skillshare source. After updates, recheck the local skill note.
