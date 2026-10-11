@@ -96,3 +96,7 @@ The `no-yak-shaving` skill was inspected in full, but not installed; its proport
 - `vault-*` exclusions already protect all seven targets. Aegis remains canonical. Updating uses `skillshare update --group vault-taste -g` for Taste and `skillshare update jevify -g` for Jevify, with dry-run, audit, test and Git backup.
 
 **Jevify TypeSafe environment:** See [Jevify TypeSafe setup](typesafe-api.md). The login shell exports both `JEV_API_KEY` and `TYPESAFE_API_KEY` with the same value, using one key declaration in `~/.bashrc`. Jevify helpers may run directly. Launch agents with the normal login-shell TypeSafe environment; no separate wrapper is installed. No key value is committed to the project or Skillshare source. After updates, recheck the local skill note.
+
+## Curated Matt/Addy and Writing specialist imports (2026-10-12)
+
+The current, authoritative 2026-10-12 status is documented in [engineering-specialists.md](engineering-specialists.md): 13 hidden Matt leaves, 7 hidden Addy leaves and one hidden ASD-STE100 leaf. They reuse `jevshelf-thinking` and `code-specialists` and add **one** globally visible `jevshelf-writing` shim. Total source is **94 (45 visible, 49 hidden)**. Six JevShelf collections have counts **50/34/5/17/16/6** for Marketing/Thinking/Academic/UI/Code/Writing. Older counts above describe earlier installation snapshots only.

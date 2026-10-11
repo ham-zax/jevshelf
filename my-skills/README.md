@@ -18,18 +18,21 @@ This folder is the **maintainer's example configuration and operating notebook**
 |---|---:|---|
 | Original global skills | 17 | Direct native discovery, subject to host filters |
 | Canonical Aegis engineering skills | 23 | Direct native discovery |
-| Additional collection shims | 3 | Direct native discovery |
+| Additional collection shims | 4 | Direct native discovery |
 | `jevify` | 1 | Direct native discovery |
 | Academic Research | 5 | Jev-only |
 | Emil UI | 15 | Jev-only |
 | Sentry specialist tools | 4 | Jev-only |
 | lassejlv additions | 3 | Jev-only |
 | Taste frontend aesthetics | 1 | Jev-only |
-| **Total in Skillshare source** | **72** | **44 visible source skills + 28 hidden leaf skills** |
+| Matt Pocock curated specialists | 13 | Jev-only (not a second engineering lifecycle) |
+| Addy Osmani curated specialists | 7 | Jev-only (not a second engineering lifecycle) |
+| ASD-STE100 technical writing | 1 | Jev-only |
+| **Total in Skillshare source** | **94** | **45 visible source skills + 49 hidden leaf skills** |
 
-The five routed collections are **Marketing 50, Thinking 28, Academic 5, UI 17, and Code Specialists 6**. Marketing and Thinking are backed by read-only upstream checkouts, while the newer specialist leaves are held in Skillshare-managed hidden `vault-*` source groups. Native agents see only their domain entry points.
+The six routed collections are **Marketing 50, Thinking 34, Academic 5, UI 17, Code Specialists 16, and Writing 6**. Marketing and Thinking are backed by read-only upstream checkouts, while the newer specialist leaves are held in Skillshare-managed hidden `vault-*` source groups. Native agents see only their domain entry points.
 
-**Current full list:** [installed.md](installed.md) and [machine-readable installed.csv](installed.csv). The inventory also tracks the 38 Matt Pocock and 25 Addy Osmani candidate skills as **not installed**.
+**Current full list:** [installed.md](installed.md) and [machine-readable installed.csv](installed.csv). The inventory also catalogs all 38 Matt Pocock and 25 Addy Osmani skills: **13 Matt and 7 Addy specialists are hidden Jev leaves**, while their full engineering systems remain inactive.
 
 **Active collection roots:** [collections.json](collections.json) is the optional manifest for this machine. To configure a compatible JevShelf installation with my selection:
 
@@ -48,6 +51,7 @@ Those commands work only after acquiring the underlying Skillshare sources. They
 | Review/install new skill | [installation-protocol.md](installation-protocol.md) | Scope: direct vs routed vs project-specific, audits, safe updates |
 | Change active engineering pack | [swap-engineering-system prompt](prompts/swap-engineering-system.md) | Reversible **user-approved** Aegis/Matt/Addy switch, never two simultaneously |
 | Read canonical engineering policy | [engineering-systems.md](engineering-systems.md) | Aegis ownership and host compatibility constraints |
+| Use curated Matt, Addy and writing specialists | [engineering-specialists.md](engineering-specialists.md) | On-demand architecture analysis, reflection, quality gates, writing and dependencies |
 | Update specialist vaults | [vault-management.md](vault-management.md) | Per-group Skillshare updates, audit caveats, rollback |
 | Rebuild original source checkouts | [restore-checkouts.sh](scripts/restore-checkouts.sh) | Pinned upstreams, not installed automatically for other users |
 | Refresh inventory | `python3 my-skills/scripts/refresh-inventory.py` | Rewrites only `installed.md` and `installed.csv` |

@@ -87,6 +87,9 @@ The standard routed groups are:
 | `vault-sentry/` | `code-specialists` | `sentry` |
 | `vault-lassejlv/` | **No additional shim** | Selected source skills are merged into `emil` or `sentry` by explicit allowlist |
 | `vault-taste/` | **No additional shim** | `design-taste-frontend` is included in `emil` / `ui-craft` |
+| `vault-matt-review/` | Existing `jevshelf-thinking`, `code-specialists`, new `jevshelf-writing` | Curated on-demand Matt skills only; full Matt engineering pack stays inactive |
+| `vault-addy-review/` | Existing `code-specialists` | Seven narrow Addy specialists only; full Addy engineering pack stays inactive |
+| `vault-writing/` | New `jevshelf-writing` | danyuchn ASD-STE100 technical-English skill only |
 
 Existing Marketing and Thinking collections retain their current paths and shims. **Aegis remains canonical**; a Sentry, lassejlv or Emil skill can advise on a technique without requiring a new plan/ticket/commit/review lifecycle.
 

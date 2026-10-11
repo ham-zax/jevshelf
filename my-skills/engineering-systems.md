@@ -18,7 +18,7 @@ Upstream: https://github.com/GanyuanRan/Aegis/ (MIT); installed **23** skill dir
 
 **Official method-pack root:** `~/.codex/aegis` is a Git checkout of Aegis. The official method-pack doctor wrote `~/.config/aegis/config.toml` with `method_pack_root` and `workspace_helper`. The root supplies repo-wide helper scripts/resources. The documented Codex guide normally exposes `~/.agents/skills/aegis → ~/.codex/aegis/skills`; **we instead use Skillshare-generated direct-child symlinks** under every target, because duplicating both views would expose every Aegis skill twice. The Aegis doctor explicitly supports this direct-child compatibility view. Installed skill directory names are prefixed `aegis__`, while skill frontmatter retains its upstream name.
 
-**Skillshare authority:** `~/.config/skillshare/skills/aegis/<skill>/SKILL.md` contains GitHub-sourced skill copies; `~/.codex/skills/aegis__<skill>`, `~/.pi/agent/skills/aegis__<skill>`, and equivalent target paths are symlinks into those copies. Source metadata supports `skillshare update --group aegis -g`. Neither Matt nor Addy is installed in the Skillshare source or host skill directories.
+**Skillshare authority:** `~/.config/skillshare/skills/aegis/<skill>/SKILL.md` contains GitHub-sourced skill copies; `~/.codex/skills/aegis__<skill>`, `~/.pi/agent/skills/aegis__<skill>`, and equivalent target paths are symlinks into those copies. Source metadata supports `skillshare update --group aegis -g`. Neither Matt nor Addy is installed as a full native engineering method pack. A curated subset of their specialist skills **is** installed behind hidden JevShelf routes; see [engineering-specialists.md](engineering-specialists.md).
 
 Installed via audited `skillshare install GanyuanRan/Aegis --all --into aegis -g` and `skillshare sync -g`. The **tracked entire Git repository** route was blocked by Skillshare's security audit for script/test helper findings; it was NOT forced or audit-skipped. The regular per-skill installation completed; audit summary: no CRITICAL, 3 HIGH, 2 MEDIUM, 9 LOW, 6 INFO findings (23 skill scan). Treat those warnings as real review items on updates; threshold `CRITICAL` is the user's preexisting policy, not a new relaxation.
 
@@ -42,7 +42,7 @@ Upstream: https://github.com/mattpocock/skills (MIT). At the inspected revision:
 
 Matt's natural workflow is `setup-matt-pocock-skills` (configure issue tracker/labels/docs) → `grill-with-docs` or `to-spec` → `to-tickets`/triage → `implement` or `implement-spec` → `code-review`/`pr`. Particularly suitable when work is tracked as granular issues, with explicit dependency edges and durable handoffs. Note: `implement` asks for `tdd`, review, and a commit; `to-tickets` assumes the issue tracker setup. These are *this system's* conventions, and would replace—not combine with—Aegis lifecycle conventions.
 
-If chosen, install its **27 manifest skills** via Skillshare in `engineering-matt/` with `--skill` names from `vendor/matt/.claude-plugin/plugin.json` (or read the current upstream manifest); do not add the native Matt plugin separately. The private clone remains available as source/reference, not a second active installation. The first run per codebase may need `setup-matt-pocock-skills`.
+If chosen, install its **27 manifest skills** via Skillshare in `engineering-matt/` with `--skill` names from `vendor/matt/.claude-plugin/plugin.json` (or read the current upstream manifest); do not add the native Matt plugin separately. The private clone remains source/reference, while selected specialists are in hidden JevShelf collections, not a second active method pack. The first run per codebase may need `setup-matt-pocock-skills`.
 
 ## Alternative 2: Addy Osmani
 
@@ -58,4 +58,4 @@ Only an explicit user request may switch the canonical system. Follow [the swap 
 
 ## Other installed skills
 
-The 17 original source skills are retained unchanged. Three additional domain shims are now visible (`academic-research`, `ui-craft`, `code-specialists`), while their 24 leaf skills are **Skillshare-managed but hidden from native discovery** under `vault-*/`. See [Jev vault management](vault-management.md). None is an additional canonical engineering system. Candidate Git checkouts remain outside agent discovery.
+The 17 original source skills are retained unchanged. Four additional domain shims are visible (`academic-research`, `ui-craft`, `code-specialists`, `jevshelf-writing`), while 49 specialist leaves are **Skillshare-managed but hidden from native discovery** under `vault-*/`. See [Jev vault management](vault-management.md). None is an additional canonical engineering system. Candidate Git checkouts remain outside agent discovery.

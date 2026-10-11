@@ -5,9 +5,9 @@ Regenerate with: python3 my-skills/scripts/refresh-inventory.py (requires Skills
 The companion CSV is the complete row-level ledger.
 
 - **Current canonical engineering system:** Aegis
-- **Installed Skillshare source entries:** 72
-- **Visible/source skills:** 44 (includes 17 original, 23 Aegis, 3 additional domain shims, and jevify)
-- **Managed hidden Jev leaves:** 28 (Academic 5, Emil 15, Sentry 4, lassejlv 3, Taste 1)
+- **Installed Skillshare source entries:** 94
+- **Visible/source skills:** 45 (includes 17 original, 23 Aegis, 4 additional domain shims, and jevify)
+- **Managed hidden Jev leaves:** 49 (Academic 5, Emil 15, Sentry 4, lassejlv 3, Taste 1, Matt specialists 13, Addy specialists 7, Writing STE 1)
 - **Aegis:** 23 installed of 23 available
 - **Matt Pocock:** 0 installed of 38 available; 27 were in the inspected official plugin
 - **Addy Osmani:** 0 installed of 25 available
@@ -29,6 +29,7 @@ The companion CSV is the complete row-level ledger.
 | baseline | jevify | github.com/altryne/jevify |
 | baseline | jevshelf-marketing | jevshelf:shims/marketing |
 | baseline | jevshelf-thinking | jevshelf:shims/thinking |
+| baseline | jevshelf-writing | jevshelf:shims/writing |
 | baseline | khiip | local |
 | baseline | open-websearch | local |
 | baseline | provenfast | local |
@@ -93,11 +94,33 @@ The companion CSV is the complete row-level ledger.
 | lassejlv-hidden | vault-lassejlv__minimize-api-responses |
 | lassejlv-hidden | vault-lassejlv__no-vibe-code |
 | taste-hidden | vault-taste__taste-skill |
+| matt-specialist-hidden | vault-matt-review__codebase-design |
+| matt-specialist-hidden | vault-matt-review__domain-modeling |
+| matt-specialist-hidden | vault-matt-review__grill-with-docs |
+| matt-specialist-hidden | vault-matt-review__grilling |
+| matt-specialist-hidden | vault-matt-review__handoff |
+| matt-specialist-hidden | vault-matt-review__improve-codebase-architecture |
+| matt-specialist-hidden | vault-matt-review__retro |
+| matt-specialist-hidden | vault-matt-review__to-questionnaire |
+| matt-specialist-hidden | vault-matt-review__wayfinder |
+| matt-specialist-hidden | vault-matt-review__writing-beats |
+| matt-specialist-hidden | vault-matt-review__writing-for-agents |
+| matt-specialist-hidden | vault-matt-review__writing-fragments |
+| matt-specialist-hidden | vault-matt-review__writing-shape |
+| addy-specialist-hidden | vault-addy-review__api-and-interface-design |
+| addy-specialist-hidden | vault-addy-review__browser-testing-with-devtools |
+| addy-specialist-hidden | vault-addy-review__constraint-driven-development |
+| addy-specialist-hidden | vault-addy-review__context-engineering |
+| addy-specialist-hidden | vault-addy-review__deprecation-and-migration |
+| addy-specialist-hidden | vault-addy-review__observability-and-instrumentation |
+| addy-specialist-hidden | vault-addy-review__source-driven-development |
+| writing-hidden | vault-writing__asd-ste100-skill |
 
 ## Available but inactive engineering collections
 
-These are source-catalog candidates, not native-installed skills. No inactive
-engineering skill is exposed through Skillshare or agent skill discovery.
+The full Matt and Addy engineering method packs remain inactive and are not
+exposed via native agent discovery. Curated, scoped specialists are installed
+as hidden Skillshare leaves and reachable only through JevShelf.
 
 ### Matt Pocock — 38 available
 

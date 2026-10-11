@@ -1,20 +1,80 @@
 {
   "collections": {
-    "marketing": {"roots": ["@repo/vendor/marketing/skills"], "description": "50 hidden marketing specialists"},
-    "thinking": {"roots": ["@repo/vendor/thinking/skills"], "description": "28 thinking specialists"},
-    "academic": {"roots": ["~/.config/skillshare/skills/vault-academic"], "description": "5 academic research skills", "resources_root": "@repo/vendor/academic", "resources_allowlist": ["shared", "scripts", "agents", "academic-paper", "academic-paper-reviewer", "academic-pipeline", "deep-research", "sr-screener"], "verify_resources_against_skills": true},
-    "emil": {"roots": [
-      "~/.config/skillshare/skills/vault-emil",
-      "~/.config/skillshare/skills/vault-lassejlv/no-vibe-code",
-      "~/.config/skillshare/skills/vault-taste/taste-skill"
-    ], "description": "17 UI design, testing, and aesthetic skills"},
-    "sentry": {"roots": [
-      "~/.config/skillshare/skills/vault-sentry/find-bugs",
-      "~/.config/skillshare/skills/vault-sentry/code-simplifier",
-      "~/.config/skillshare/skills/vault-sentry/security-review",
-      "~/.config/skillshare/skills/vault-sentry/skill-scanner",
-      "~/.config/skillshare/skills/vault-lassejlv/backend-security-audit",
-      "~/.config/skillshare/skills/vault-lassejlv/minimize-api-responses"
-    ], "description": "6 engineering and security specialties"}
+    "marketing": {
+      "roots": [
+        "@repo/vendor/marketing/skills"
+      ],
+      "description": "50 hidden marketing specialists"
+    },
+    "thinking": {
+      "roots": [
+        "@repo/vendor/thinking/skills",
+        "~/.config/skillshare/skills/vault-matt-review/grilling",
+        "~/.config/skillshare/skills/vault-matt-review/domain-modeling",
+        "~/.config/skillshare/skills/vault-matt-review/wayfinder",
+        "~/.config/skillshare/skills/vault-matt-review/grill-with-docs",
+        "~/.config/skillshare/skills/vault-matt-review/retro",
+        "~/.config/skillshare/skills/vault-matt-review/handoff"
+      ],
+      "description": "34 on-demand thinking, grilling, wayfinding, retrospective and handoff skills"
+    },
+    "academic": {
+      "roots": [
+        "~/.config/skillshare/skills/vault-academic"
+      ],
+      "description": "5 academic research skills",
+      "resources_root": "@repo/vendor/academic",
+      "resources_allowlist": [
+        "shared",
+        "scripts",
+        "agents",
+        "academic-paper",
+        "academic-paper-reviewer",
+        "academic-pipeline",
+        "deep-research",
+        "sr-screener"
+      ],
+      "verify_resources_against_skills": true
+    },
+    "emil": {
+      "roots": [
+        "~/.config/skillshare/skills/vault-emil",
+        "~/.config/skillshare/skills/vault-lassejlv/no-vibe-code",
+        "~/.config/skillshare/skills/vault-taste/taste-skill"
+      ],
+      "description": "17 UI design, testing, and aesthetic skills"
+    },
+    "sentry": {
+      "roots": [
+        "~/.config/skillshare/skills/vault-sentry/find-bugs",
+        "~/.config/skillshare/skills/vault-sentry/code-simplifier",
+        "~/.config/skillshare/skills/vault-sentry/security-review",
+        "~/.config/skillshare/skills/vault-sentry/skill-scanner",
+        "~/.config/skillshare/skills/vault-lassejlv/backend-security-audit",
+        "~/.config/skillshare/skills/vault-lassejlv/minimize-api-responses",
+        "~/.config/skillshare/skills/vault-matt-review/improve-codebase-architecture",
+        "~/.config/skillshare/skills/vault-matt-review/codebase-design",
+        "~/.config/skillshare/skills/vault-matt-review/domain-modeling",
+        "~/.config/skillshare/skills/vault-addy-review/constraint-driven-development",
+        "~/.config/skillshare/skills/vault-addy-review/deprecation-and-migration",
+        "~/.config/skillshare/skills/vault-addy-review/api-and-interface-design",
+        "~/.config/skillshare/skills/vault-addy-review/observability-and-instrumentation",
+        "~/.config/skillshare/skills/vault-addy-review/browser-testing-with-devtools",
+        "~/.config/skillshare/skills/vault-addy-review/context-engineering",
+        "~/.config/skillshare/skills/vault-addy-review/source-driven-development"
+      ],
+      "description": "16 on-demand code, architecture, quality, browser and operational specialists"
+    },
+    "writing": {
+      "roots": [
+        "~/.config/skillshare/skills/vault-matt-review/writing-for-agents",
+        "~/.config/skillshare/skills/vault-matt-review/to-questionnaire",
+        "~/.config/skillshare/skills/vault-matt-review/writing-fragments",
+        "~/.config/skillshare/skills/vault-matt-review/writing-beats",
+        "~/.config/skillshare/skills/vault-matt-review/writing-shape",
+        "~/.config/skillshare/skills/vault-writing/asd-ste100-skill"
+      ],
+      "description": "6 writing specialists for articles, interviews, questionnaires, agent docs and technical clarity"
+    }
   }
 }
