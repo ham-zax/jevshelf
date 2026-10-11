@@ -6,18 +6,28 @@
       ],
       "description": "50 hidden marketing specialists"
     },
-    "thinking": {
+    "critical-thinking": {
       "roots": [
-        "@repo/vendor/thinking/skills",
+        "@repo/vendor/thinking/skills"
+      ],
+      "description": "28 analytical reasoning, evidence evaluation, decision and systems-thinking frameworks"
+    },
+    "lateral-thinking": {
+      "roots": [
+        "~/.config/skillshare/skills/vault-lateral"
+      ],
+      "description": "9 creative divergence tools: lateral router and eight idea-generation techniques"
+    },
+    "decision-reflection": {
+      "roots": [
         "~/.config/skillshare/skills/vault-matt-review/grilling",
         "~/.config/skillshare/skills/vault-matt-review/domain-modeling",
         "~/.config/skillshare/skills/vault-matt-review/wayfinder",
         "~/.config/skillshare/skills/vault-matt-review/grill-with-docs",
         "~/.config/skillshare/skills/vault-matt-review/retro",
-        "~/.config/skillshare/skills/vault-matt-review/handoff",
-        "~/.config/skillshare/skills/vault-lateral"
+        "~/.config/skillshare/skills/vault-matt-review/handoff"
       ],
-      "description": "43 on-demand reasoning, interviews, retrospectives and lateral creativity skills"
+      "description": "6 deliberate interviews, domain clarification, long-range planning, retro and handoff skills"
     },
     "academic": {
       "roots": [

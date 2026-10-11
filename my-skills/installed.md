@@ -5,8 +5,8 @@ Regenerate with: python3 my-skills/scripts/refresh-inventory.py (requires Skills
 The companion CSV is the complete row-level ledger.
 
 - **Current canonical engineering system:** Aegis
-- **Installed Skillshare source entries:** 103
-- **Visible/source skills:** 45 (includes 17 original, 23 Aegis, 4 additional domain shims, and jevify)
+- **Installed Skillshare source entries:** 105
+- **Visible/source skills:** 47 (includes 17 original, 23 Aegis, 6 additional domain shims, and jevify)
 - **Managed hidden Jev leaves:** 58 (Academic 5, Emil 15, Sentry 4, lassejlv 3, Taste 1, Matt specialists 13, Addy specialists 7, Writing STE 1, Lateral 9)
 - **Aegis:** 23 installed of 23 available
 - **Matt Pocock:** 0 installed of 38 available; 27 were in the inspected official plugin
@@ -27,8 +27,10 @@ The companion CSV is the complete row-level ledger.
 | baseline | find-skills | local |
 | baseline | impeccable | local |
 | baseline | jevify | github.com/altryne/jevify |
+| baseline | jevshelf-critical-thinking | jevshelf:shims/critical-thinking |
+| baseline | jevshelf-decision-reflection | jevshelf:shims/decision-reflection |
+| baseline | jevshelf-lateral-thinking | jevshelf:shims/lateral-thinking |
 | baseline | jevshelf-marketing | jevshelf:shims/marketing |
-| baseline | jevshelf-thinking | jevshelf:shims/thinking |
 | baseline | jevshelf-writing | jevshelf:shims/writing |
 | baseline | khiip | local |
 | baseline | open-websearch | local |
@@ -146,5 +148,5 @@ auditing caveats, and reversible swap prompt are in
 [engineering-systems.md](engineering-systems.md) and
 [swap-engineering-system.md](prompts/swap-engineering-system.md).
 
-Existing Marketing and Thinking collections are still behind their
+Marketing and three focused thinking domains remain behind their
 individual router shims and are not counted as engineering systems.

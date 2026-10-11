@@ -10,8 +10,10 @@ baseline,codebase-memory,installed,codebase-memory,local,codebase-memory,Existin
 baseline,find-skills,installed,find-skills,local,find-skills,Existing skill; preserve during engineering swaps
 baseline,impeccable,installed,impeccable,local,impeccable,Existing skill; preserve during engineering swaps
 baseline,jevify,installed,jevify,github.com/altryne/jevify,jevify,Existing skill; preserve during engineering swaps
+baseline,jevshelf-critical-thinking,installed,jevshelf-critical-thinking,jevshelf:shims/critical-thinking,jevshelf-critical-thinking,Existing skill; preserve during engineering swaps
+baseline,jevshelf-decision-reflection,installed,jevshelf-decision-reflection,jevshelf:shims/decision-reflection,jevshelf-decision-reflection,Existing skill; preserve during engineering swaps
+baseline,jevshelf-lateral-thinking,installed,jevshelf-lateral-thinking,jevshelf:shims/lateral-thinking,jevshelf-lateral-thinking,Existing skill; preserve during engineering swaps
 baseline,jevshelf-marketing,installed,jevshelf-marketing,jevshelf:shims/marketing,jevshelf-marketing,Existing skill; preserve during engineering swaps
-baseline,jevshelf-thinking,installed,jevshelf-thinking,jevshelf:shims/thinking,jevshelf-thinking,Existing skill; preserve during engineering swaps
 baseline,jevshelf-writing,installed,jevshelf-writing,jevshelf:shims/writing,jevshelf-writing,Existing skill; preserve during engineering swaps
 baseline,khiip,installed,khiip,local,khiip,Existing skill; preserve during engineering swaps
 baseline,open-websearch,installed,open-websearch,local,open-websearch,Existing skill; preserve during engineering swaps

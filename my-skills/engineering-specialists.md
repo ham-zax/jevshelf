@@ -14,7 +14,7 @@ The canonical engineering lifecycle is **Aegis**. Only the following specialist 
 |---|---|---|
 | `sentry` / `code-specialists` | Matt `improve-codebase-architecture`, `codebase-design`, `domain-modeling` | Read-only architecture diagnosis, deep module design, canonical domain terms |
 | `sentry` / `code-specialists` | Addy `constraint-driven-development`, `deprecation-and-migration`, `api-and-interface-design`, `observability-and-instrumentation`, `browser-testing-with-devtools`, `context-engineering`, `source-driven-development` | Quality targets; safe code/data retirement; API contracts; instrumentation; *authorized* browser checks; agent context hygiene; grounded implementation |
-| `thinking` / `jevshelf-thinking` | Matt `grilling`, `grill-with-docs`, `domain-modeling`, `wayfinder`, `retro`, `handoff` | Decision-tree interviews, major multi-session decision planning, session reflection and concise handoffs |
+| `decision-reflection` / `jevshelf-decision-reflection` | Matt `grilling`, `grill-with-docs`, `domain-modeling`, `wayfinder`, `retro`, `handoff` | Decision-tree interviews, major multi-session decision planning, session reflection and concise handoffs |
 | `writing` / `jevshelf-writing` | Matt `writing-fragments`, `writing-beats`, `writing-shape`, `writing-for-agents`, `to-questionnaire` | Collaborative long-form drafting, organizing notes, agent-facing writing, stakeholder questionnaires |
 | `writing` / `jevshelf-writing` | danyuchn `asd-ste100-skill` | Rewrite ambiguous tool messages, agent instructions, error descriptions and other technical prose; not creative writing |
 
@@ -37,6 +37,6 @@ The ASD-STE100 skill imported with LOW external-link findings and an INFO interp
 ## Managing the collection
 
 - Skillshare remains the source of truth: audit before updates, update source groups at pinned or reviewed upstream revisions, sync global targets, refresh the inventory, back up, and record Git revisions.
-- Native skill discovery exposes **one new visible leaf**: `jevshelf-writing`; code and thinking reuse existing shims. `vault-*` groups stay excluded from all seven configured targets.
+- Native discovery exposes `jevshelf-writing`, retains the existing `code-specialists` shim, and now has separate `jevshelf-critical-thinking`, `jevshelf-lateral-thinking`, and `jevshelf-decision-reflection` shims. The former `jevshelf-thinking` shim was removed; `vault-*` source groups stay excluded from all seven configured targets.
 - Collection membership is declared in `my-skills/collections.json`, copied into `~/.config/jevshelf/collections.json` for this machine. Other users do not need these sources or collections.
 - For reflection, explicitly ask: **"Use `retro` to review this session. Show proposed improvements first; don't change rules or tooling without approval."**

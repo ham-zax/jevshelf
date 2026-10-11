@@ -12,7 +12,7 @@ The six hidden source skills are:
 - **`writing-fragments`** (Matt, experimental) — explore raw material without forcing structure; user-directed writing session.
 - **`writing-shape`** (Matt, experimental) — turn existing raw notes into a shaped article.
 - **`writing-beats`** (Matt, experimental) — assemble raw material into a sequence of narrative beats, with decisions made interactively.
-- **`writing-for-agents`** (Matt) — write precise `SKILL.md`, `AGENTS.md`, instructions and agent-consumed documents. This is also the companion reference for `retro` in `jevshelf-thinking`.
+- **`writing-for-agents`** (Matt) — write precise `SKILL.md`, `AGENTS.md`, instructions and agent-consumed documents. This is also the companion reference for `retro` in `jevshelf-decision-reflection`.
 - **`to-questionnaire`** (Matt) — draft an evidence-seeking questionnaire for a specific recipient to resolve open decisions. It may need the user's knowledge of the recipient; do not invent answers.
 - **`asd-ste100-skill`** (danyuchn) — simplify ambiguous technical, tool, error, and inter-agent English. Strict STE is *not* the right style for creative fiction or brand copy. Its linter checks structure, not semantic equivalence or certified ASD-STE100 compliance.
 

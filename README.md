@@ -90,10 +90,12 @@ This repository intentionally contains **two separate things**:
 |---|---|---|
 | Audience | Anyone with local agent skills | My own working configuration and reference notes |
 | Install | `scripts/bootstrap.sh` + `jevshelf init` | Opt-in `my-skills/collections.json` and existing Skillshare source |
-| Collections | Any names and any source directories | Marketing, Thinking, Academic, UI, Code Specialists, Writing |
+| Collections | Any names and any source directories | Marketing, Critical Thinking, Lateral Thinking, Decision & Reflection, Academic, UI, Code Specialists, Writing |
 | Engineering method | **None required** | Aegis active; Matt / Addy available for swap |
 | Storage | Your own local directories | My Skillshare source Git and private `~/repo/my-skills-backup/` snapshot repository |
 | Support docs | [Quickstart](docs/quickstart.md), [architecture](docs/architecture.md) | [Installed catalog](my-skills/installed.md), [favorites](my-skills/references.md), [swap instructions](my-skills/prompts/swap-engineering-system.md), [backups](my-skills/backups.md), [specialists](my-skills/engineering-specialists.md) |
+
+The personal [Thinking collection map](my-skills/thinking-collections.md) shows how 43 previously grouped skills are now separated into three focused domains (28 analytical, 9 lateral, 6 decision/reflection).
 
 The **My Skills** folder is a transparent real-world example—not a required preset. It documents my current skill inventory, reference ideas (including Distilly), Skillshare update practices, Aegis swaps, source provenance and snapshots. It contains **no API keys, personal conversation archives, or backup archive contents**; the backup destination itself is a separate private repository.
 

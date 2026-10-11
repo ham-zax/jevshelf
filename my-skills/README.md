@@ -18,7 +18,7 @@ This folder is the **maintainer's example configuration and operating notebook**
 |---|---:|---|
 | Original global skills | 17 | Direct native discovery, subject to host filters |
 | Canonical Aegis engineering skills | 23 | Direct native discovery |
-| Additional collection shims | 4 | Direct native discovery |
+| Additional collection shims | 6 | Direct native discovery |
 | `jevify` | 1 | Direct native discovery |
 | Academic Research | 5 | Jev-only |
 | Emil UI | 15 | Jev-only |
@@ -29,9 +29,9 @@ This folder is the **maintainer's example configuration and operating notebook**
 | Addy Osmani curated specialists | 7 | Jev-only (not a second engineering lifecycle) |
 | ASD-STE100 technical writing | 1 | Jev-only |
 | Danium lateral-thinking toolkit | 9 | Jev-only (8 techniques + router) |
-| **Total in Skillshare source** | **103** | **45 visible source skills + 58 hidden leaf skills** |
+| **Total in Skillshare source** | **105** | **47 visible source skills + 58 hidden leaf skills** |
 
-The six routed collections are **Marketing 50, Thinking 43, Academic 5, UI 17, Code Specialists 16, and Writing 6**. Marketing and Thinking are backed by read-only upstream checkouts, while the newer specialist leaves are held in Skillshare-managed hidden `vault-*` source groups. Native agents see only their domain entry points.
+The eight routed collections are **Marketing 50, Critical Thinking 28, Lateral Thinking 9, Decision & Reflection 6, Academic 5, UI 17, Code Specialists 16, and Writing 6**. The former 43-skill Thinking collection is divided into three independently routed domains; see [the thinking collection map](thinking-collections.md). Marketing and Critical Thinking use read-only upstream checkouts, while additional specialist leaves are held in hidden Skillshare `vault-*` groups. Agents discover only the domain entry points.
 
 **Current full list:** [installed.md](installed.md) and [machine-readable installed.csv](installed.csv). The inventory also catalogs all 38 Matt Pocock and 25 Addy Osmani skills: **13 Matt and 7 Addy specialists are hidden Jev leaves**, while their full engineering systems remain inactive.
 
@@ -53,6 +53,7 @@ Those commands work only after acquiring the underlying Skillshare sources. They
 | Change active engineering pack | [swap-engineering-system prompt](prompts/swap-engineering-system.md) | Reversible **user-approved** Aegis/Matt/Addy switch, never two simultaneously |
 | Read canonical engineering policy | [engineering-systems.md](engineering-systems.md) | Aegis ownership and host compatibility constraints |
 | Use curated Matt, Addy and writing specialists | [engineering-specialists.md](engineering-specialists.md) | On-demand architecture analysis, reflection, quality gates, writing and dependencies |
+| Navigate Critical, Lateral, and Decision/Reflection skills | [thinking-collections.md](thinking-collections.md) | Three independent domains, exact counts, purposes and routing commands |
 | Update specialist vaults | [vault-management.md](vault-management.md) | Per-group Skillshare updates, audit caveats, rollback |
 | Rebuild original source checkouts | [restore-checkouts.sh](scripts/restore-checkouts.sh) | Pinned upstreams, not installed automatically for other users |
 | Refresh inventory | `python3 my-skills/scripts/refresh-inventory.py` | Rewrites only `installed.md` and `installed.csv` |

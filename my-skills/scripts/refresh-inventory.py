@@ -184,7 +184,7 @@ def main() -> None:
         "",
         f"- **Current canonical engineering system:** {title[active[0]] if active else 'none'}",
         f"- **Installed Skillshare source entries:** {sum(counts.values()) + sum(hidden.values())}",
-        f"- **Visible/source skills:** {sum(counts.values())} (includes 17 original, 23 Aegis, 4 additional domain shims, and jevify)",
+        f"- **Visible/source skills:** {sum(counts.values())} (includes 17 original, 23 Aegis, 6 additional domain shims, and jevify)",
         f"- **Managed hidden Jev leaves:** {sum(hidden.values())} (Academic {hidden['academic-hidden']}, Emil {hidden['emil-hidden']}, Sentry {hidden['sentry-hidden']}, lassejlv {hidden['lassejlv-hidden']}, Taste {hidden['taste-hidden']}, Matt specialists {hidden['matt-specialist-hidden']}, Addy specialists {hidden['addy-specialist-hidden']}, Writing STE {hidden['writing-hidden']}, Lateral {hidden['lateral-hidden']})",
         f"- **Aegis:** {counts['aegis']} installed of {sources['aegis']} available",
         f"- **Matt Pocock:** {counts['matt']} installed of {sources['matt']} available; 27 were in the inspected official plugin",
@@ -233,7 +233,7 @@ def main() -> None:
         "[engineering-systems.md](engineering-systems.md) and",
         "[swap-engineering-system.md](prompts/swap-engineering-system.md).",
         "",
-        "Existing Marketing and Thinking collections are still behind their",
+        "Marketing and three focused thinking domains remain behind their",
         "individual router shims and are not counted as engineering systems.",
     ]
     MD_PATH.write_text("\n".join(lines) + "\n", encoding="utf-8")
