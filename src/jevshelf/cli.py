@@ -140,7 +140,7 @@ def _source_reference(skill, root: Path, name: str = "") -> str:
             for idx, configured_root in enumerate(_collection_roots(name)):
                 base = Path(configured_root).resolve()
                 try:
-                    return f"root{idx}:" + skill.source.relative_to(base.parent).as_posix()
+                    return f"root{idx}:" + skill.source.relative_to(base).as_posix()
                 except ValueError:
                     pass
         skillshare_source = Path(

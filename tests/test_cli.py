@@ -354,3 +354,25 @@ def test_taste_skill_joins_ui_collection_without_new_native_leaf(tmp_path, monke
     assert code == 0
     assert loaded['name'] == 'design-taste-frontend'
     assert 'Taste design direction.' in loaded['content']
+
+
+def test_user_manifest_is_independent_and_labels_mixed_roots(tmp_path, monkeypatch, capsys):
+    """Public users can configure arbitrary collections and receive accurate source refs."""
+    base = tmp_path / 'sources'
+    write_skill(base / 'alpha', 'alpha-skill', 'alpha-skill', 'Review architecture decisions.', 'Alpha guidance.')
+    write_skill(base / 'beta', 'beta-skill', 'beta-skill', 'Audit interface edge cases.', 'Beta guidance.')
+    manifest = tmp_path / 'collections.json'
+    manifest.write_text(json.dumps({'collections': {'custom': {'roots': [str(base / 'alpha'), str(base / 'beta')]}}}))
+    monkeypatch.setenv('JEVSHELF_CONFIG', str(manifest))
+    code, info = invoke(capsys, ['collections'])
+    assert code == 0
+    assert list(info['collections']) == ['custom']
+    assert info['collections']['custom']['skills'] == 2
+    code, found = invoke(capsys, ['search', '--collection', 'custom', '--mode', 'lexical',
+                                  '--task', 'audit interface edge cases', '--max-results', '2'])
+    assert code == 0
+    selected = next(s for s in found['selected'] if s['name'] == 'beta-skill')
+    assert selected['source'] == 'root1:beta-skill/SKILL.md'
+    code, result = invoke(capsys, ['load', '--collection', 'custom', '--id', selected['id'],
+                                   '--expected-digest', selected['digest']])
+    assert code == 0 and 'Beta guidance.' in result['content']
