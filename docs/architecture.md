@@ -50,6 +50,25 @@ Lexical mode resolves an exact normalized skill name locally; other queries reta
 - **JevShelf**: portable collection configuration, selection interface and safe bounded reads, plus a shim generator.
 - **Agent host**: tools, approvals, permissions, reasoning, implementation, tests and final answers. Existing skills and methods still take precedence when applicable.
 
+## Canonical workflow and specialist choice
+
+The host honors activation rules, chooses the applicable configured engineering
+workflow and retains its fast path before specialist discovery. A relevant workflow and a useful specialist
+can coexist: one owns the process; the other contributes expertise to a step.
+Non-engineering tasks do not require an engineering workflow.
+
+The host considers directly available specialist descriptions first. It searches
+JevShelf when extra expertise would help, the choice is ambiguous, or the user
+requests it, then compares returned descriptions with useful direct candidates.
+Only useful instructions are loaded. A sufficient direct skill can avoid a
+hosted call; no-match or uncertainty never requires forcing another workflow.
+
+Engineering search context should identify the active workflow, current step and
+needed contribution. Jev sees only supplied context and the configured collection;
+it cannot discover all native host skills or choose the canonical owner. The host
+retains planning, artifact, verification, completion and permission boundaries.
+This is instruction-level routing, not runtime enforcement of model behavior.
+
 ## Portability
 
 JevShelf is a Python CLI, not a Claude-specific plugin or a universal agent hook. Configure collections using a JSON manifest, then make one ordinary portable `SKILL.md` shim per domain. Skillshare handles distribution to configured supported hosts. The product neither installs Skillshare nor changes its targets automatically. One user's source paths, collection selection and installed skills are never required by another user's installation.

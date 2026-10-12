@@ -12,6 +12,21 @@ See [skill-inventory.md](installed.md) and [skill-inventory.csv](installed.csv) 
 - **JevShelf Marketing/Thinking shims** stay independent and use the canonical `jevshelf` command. Jev is not used to mix the three whole engineering frameworks at runtime.
 - User/project instructions outrank all optional skill-method suggestions. A small task need not become a lengthy plan, automatic TDD, or mandatory review.
 
+## Routing within the active method
+
+Load only the relevant Aegis workflow and retain its fast path. For a specialist
+contribution, first consider directly available skills. Search JevShelf when
+additional expertise helps, selection is ambiguous, or the user requests it;
+compare returned descriptions with useful direct candidates for the current step.
+Aegis may be fully relevant while a security or UI specialist still adds value.
+A sufficient direct specialist does not require a Jev call.
+
+Include the active Aegis workflow, current step and needed contribution in search
+context. Specialist techniques and findings do not replace Aegis artifacts,
+testing, review or completion conventions. Non-engineering work does not require
+Aegis. The shared instruction template and host-update procedure live in
+[GLOBAL_AGENT_GUIDANCE.md](../docs/GLOBAL_AGENT_GUIDANCE.md).
+
 ## Current Aegis installation
 
 Upstream: https://github.com/GanyuanRan/Aegis/ (MIT); installed **23** skill directories.

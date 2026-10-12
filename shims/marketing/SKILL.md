@@ -3,6 +3,8 @@ name: jevshelf-marketing
 description: Use for marketing and growth tasks including landing-page conversion (CRO), signup, onboarding, copywriting, positioning, pricing, SEO, ads, customer research, analytics, and retention. Discover the relevant specialty from 50 hidden marketing skills.
 ---
 
+Engineering tasks stay under the configured canonical workflow and its activation rules; specialists contribute expertise to the current step. Compare useful direct skills with returned candidates, include the active workflow and needed contribution in `--context`, and preserve workflow and artifact ownership.
+
 Before searching, frame a neutral current question and provide `--context` with the product purpose, current step, observed evidence, unknowns and constraints. Define unfamiliar names. Name a preferred framework only when the user explicitly requested it. Request up to three recommendations and load only useful instructions; fewer or none is valid. For an explicitly named skill, `--mode lexical --task "<exact skill name>"` is a local lookup. Keep lexical fallback explicit; never silently replace Jev no-match, uncertainty or error.
 
 Use the `jevshelf` CLI to select instructions from the marketing collection only when they are useful for the user's request.

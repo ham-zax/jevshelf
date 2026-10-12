@@ -2,8 +2,10 @@
 name: code-specialists
 summary: Sixteen focused engineering, architecture, security, browser, and API specialists behind Jev
 source: https://github.com/getsentry/skills, https://github.com/lassejlv/skills, https://github.com/mattpocock/skills, https://github.com/addyosmani/agent-skills
-description: Use for bug finding in code diffs, backend security and authorization audits, high-confidence security reviews, simplifying code without changing behavior, scanning third-party skills for prompt injection, or minimizing exposed API response fields while respecting consumer contracts. Jev selects from sixteen Sentry, lassejlv, Matt Pocock, and Addy Osmani specialists, including architecture reviews, quality constraints, web-browser verification, source-driven decisions and production diagnostics.
+description: Optional engineering expertise within the configured canonical workflow. Use for bug finding in code diffs, backend security and authorization audits, high-confidence security reviews, simplifying code without changing behavior, scanning third-party skills for prompt injection, or minimizing exposed API response fields while respecting consumer contracts. Jev selects from sixteen Sentry, lassejlv, Matt Pocock, and Addy Osmani specialists, including architecture reviews, quality constraints, web-browser verification, source-driven decisions and production diagnostics.
 ---
+
+Engineering tasks stay under the configured canonical workflow and its activation rules; specialists contribute expertise to the current step. Compare useful direct skills with returned candidates, include the active workflow and needed contribution in `--context`, and preserve workflow and artifact ownership.
 
 Before searching, frame a neutral current question and provide `--context` with the product purpose, current step, observed evidence, unknowns and constraints. Define unfamiliar names. Name a preferred framework only when the user explicitly requested it. Request up to three recommendations and load only useful instructions; fewer or none is valid. For an explicitly named skill, `--mode lexical --task "<exact skill name>"` is a local lookup. Keep lexical fallback explicit; never silently replace Jev no-match, uncertainty or error.
 

@@ -1,7 +1,9 @@
 ---
 name: jevshelf-decision-reflection
-description: Use when explicitly asked to grill or deeply clarify decisions, examine a design through an interview, plan a multi-session initiative with wayfinding, reflect on a completed coding session (retro), or produce an agent handoff. Select from six on-demand Matt Pocock decision and reflection skills without activating his full engineering lifecycle.
+description: Optional decision and reflection guidance within the current workflow. Use when explicitly asked to grill or deeply clarify decisions, examine a design through an interview, plan a multi-session initiative with wayfinding, reflect on a completed coding session (retro), or produce an agent handoff. Select from six on-demand Matt Pocock decision and reflection skills without activating his full engineering lifecycle.
 ---
+
+Engineering tasks stay under the configured canonical workflow and its activation rules; specialists contribute expertise to the current step. Compare useful direct skills with returned candidates, include the active workflow and needed contribution in `--context`, and preserve workflow and artifact ownership.
 
 Before searching, frame a neutral current question and provide `--context` with the product purpose, current step, observed evidence, unknowns and constraints. Define unfamiliar names. Name a preferred framework only when the user explicitly requested it. Request up to three recommendations and load only useful instructions; fewer or none is valid. For an explicitly named skill, `--mode lexical --task "<exact skill name>"` is a local lookup. Keep lexical fallback explicit; never silently replace Jev no-match, uncertainty or error.
 

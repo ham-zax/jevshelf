@@ -2,8 +2,10 @@
 name: ui-craft
 summary: On-demand UI, visual design, aesthetic direction, and animation skills via Jev
 source: https://github.com/emilkowalski/skills, https://github.com/lassejlv/skills, https://github.com/Leonxlnx/taste-skill
-description: Use for premium landing page aesthetics, intentional visual branding, non-generic frontend design, portfolio and website redesigns, UI craft, motion and animation, mobile-native interfaces, frontend edge-case testing, and prototyping. Jev selects 17 specialist UI skills including design-taste-frontend, Emil Kowalski, and no-vibe-code.
+description: Optional UI expertise within the configured canonical engineering workflow. Use for premium landing page aesthetics, intentional visual branding, non-generic frontend design, portfolio and website redesigns, UI craft, motion and animation, mobile-native interfaces, frontend edge-case testing, and prototyping. Jev selects 17 specialist UI skills including design-taste-frontend, Emil Kowalski, and no-vibe-code.
 ---
+
+Engineering tasks stay under the configured canonical workflow and its activation rules; specialists contribute expertise to the current step. Compare useful direct skills with returned candidates, include the active workflow and needed contribution in `--context`, and preserve workflow and artifact ownership.
 
 Before searching, frame a neutral current question and provide `--context` with the product purpose, current step, observed evidence, unknowns and constraints. Define unfamiliar names. Name a preferred framework only when the user explicitly requested it. Request up to three recommendations and load only useful instructions; fewer or none is valid. For an explicitly named skill, `--mode lexical --task "<exact skill name>"` is a local lookup. Keep lexical fallback explicit; never silently replace Jev no-match, uncertainty or error.
 
