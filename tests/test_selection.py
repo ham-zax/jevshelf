@@ -106,12 +106,19 @@ def test_public_search_and_plan_share_wider_verification_policy(tmp_path, monkey
     root = make_skills(tmp_path, "Compact method.", count=8)
     configure(tmp_path, monkeypatch, root)
     monkeypatch.setenv("TYPESAFE_API_KEY", "fixture-never-sent")
-    monkeypatch.setattr(cli, "Router", lambda config: Router(config, RecordedClient()))
+    configs = []
+
+    def make_router(config):
+        configs.append(config)
+        return Router(config, RecordedClient())
+
+    monkeypatch.setattr(cli, "Router", make_router)
     args = ["--collection", "analysis", "--task", "Inspect evidence", "--context", "Current step: assess observed behavior"]
     assert cli.main(["plan", *args]) == 0
     plan = json.loads(capsys.readouterr().out)
     assert cli.main(["search", *args, "--mode", "jev", "--max-results", "3"]) == 0
     result = json.loads(capsys.readouterr().out)
+    assert [config.model for config in configs] == ["jev-preview", "jev-preview"]
     assert result["shortlisted"] == 6 and len(result["selected"]) == 3
     assert result["api_calls"] <= plan["base_requests_upper_bound"]
 

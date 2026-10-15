@@ -1,6 +1,6 @@
 # Skillshare-managed Jev collections
 
-**Current configuration:** Five Jev collections: Marketing 50, Thinking 28, Academic Research 5, UI 17 (Emil + lassejlv + Taste), code specialists 6 (Sentry + lassejlv). Aegis remains the sole active engineering lifecycle system; Haft, Matt Pocock, and Addy Osmani are not installed as competing workflows.
+**Current configuration:** Five Jev collections: Marketing 50, Thinking 28, Academic Research 5, UI 16 (Emil + lassejlv), code specialists 6 (Sentry + lassejlv). Aegis remains the sole active engineering lifecycle system; Haft, Matt Pocock, and Addy Osmani are not installed as competing workflows.
 
 ## Source of truth and exposure
 
@@ -12,11 +12,10 @@ The 28 managed hidden leaves reside directly under the Skillshare source library
 | `emil` | `vault-emil/` | emilkowalski/skills | `2d228630ba1446365f614a108cb8252f1feda202` |
 | `sentry` | `vault-sentry/` | getsentry/skills | `d18b7aa8ba878354e5c348310230e652f7690f9c` |
 | `emil` and `sentry` | `vault-lassejlv/` | lassejlv/skills | `07d8ada0d9cc14baa814525e29fabc4682c7c370` |
-| `emil` | `vault-taste/` | Leonxlnx/taste-skill | `717446e07a78d4e6d7918b1fde1a263378eebac9` |
 
 All seven existing Skillshare targets have an extra **`vault-*`** exclusion. Original exclusions remain intact. The eight discoverable, locally managed JevShelf domain shims are `jevshelf-marketing`, `jevshelf-critical-thinking`, `jevshelf-lateral-thinking`, `jevshelf-decision-reflection`, `academic-research`, `ui-craft`, `code-specialists`, and `jevshelf-writing`. All source leaf groups remain hidden by `vault-*` exclusions. The command `jevshelf` uses Skillshare's *source* group to read metadata and selected skill bodies, not a separately copied hidden vault.
 
-The original Sentry subset remains exactly `find-bugs`, `code-simplifier`, `security-review`, and `skill-scanner`. The other Sentry skills are not routed. The `sentry` Jev collection additionally includes `backend-security-audit` and `minimize-api-responses` from Skillshare group `vault-lassejlv`; `emil` adds `no-vibe-code` from that group and `design-taste-frontend` from `vault-taste/`. **There is no additional native Jev shim; none of these four supplementary routed leaves is directly installed.**
+The original Sentry subset remains exactly `find-bugs`, `code-simplifier`, `security-review`, and `skill-scanner`. The other Sentry skills are not routed. The `sentry` Jev collection additionally includes `backend-security-audit` and `minimize-api-responses` from Skillshare group `vault-lassejlv`; `emil` adds `no-vibe-code` from that group. **There is no additional native Jev shim; none of these three supplementary routed leaves is directly installed.**
 
 ## Managed updates
 
@@ -31,7 +30,7 @@ skillshare sync -g
 python3 ~/repo/jevshelf/my-skills/scripts/refresh-inventory.py
 ```
 
-Apply the same steps to `vault-sentry`, `vault-academic`, `vault-lassejlv`, or `vault-taste`. If an update adds new Sentry skills, **do not** add them: the router only permits the original four. No default auto-update has been enabled.
+Apply the same steps to `vault-sentry`, `vault-academic`, or `vault-lassejlv`. If an update adds new Sentry skills, **do not** add them: the router only permits the original four. No default auto-update has been enabled.
 
 ### Academic supporting files
 
@@ -57,7 +56,7 @@ For new skills, follow [the installation protocol](installation-protocol.md) and
 
 The durable Skillshare-managed source is Git-tracked under `~/.config/skillshare/skills`. After a successful installation, commit `.metadata.json`, the three shim directories, and the `vault-*/` source groups. Keep a separate **Git bundle** of the committed source under `~/.local/share/skillshare/backups/`, along with a snapshot of `~/.config/skillshare/config.yaml` (which records the target filters). Keep the project Git checkout and pinned vendor repository SHAs for the full research support tree.
 
-Suggested post-update recovery checkpoint (or simply run `bash scripts/backup-skillshare.sh` after committing the Skillshare source):
+Suggested post-update recovery checkpoint:
 
 ```bash
 stamp=$(date +%Y%m%d-%H%M%S)
@@ -87,13 +86,11 @@ The `vault-*` exclusion already covers the new group in all seven targets. The `
 
 The `no-yak-shaving` skill was inspected in full, but not installed; its proportional engineering approach overlaps Aegis and the existing global engineering guidelines. It may be added as **optional advice** upon explicit request, not as a mandatory second engineering system.
 
-## Jevify (direct) and Taste (Jev-routed) — 2026-10-12
+## Jevify (direct) — 2026-10-12
 
 - **Jevify** (`jevify`) installed normally through Skillshare from `https://github.com/altryne/jevify`, pinned import commit `11f36f8d548cf5020a20e5eb548f21c3d7181a17`. It is one additional globally visible skill, with its original `scripts/`, `references/`, `assets/` and metadata intact. It is not a universal prompt router or host hook. It instructs agents when bulk semantic scanning may be appropriate and includes a Python standard-library-only helper. It does not require a second plugin installation.
-- **Taste** (`design-taste-frontend`) installed from `https://github.com/Leonxlnx/taste-skill`, pinned to `717446e07a78d4e6d7918b1fde1a263378eebac9`, under hidden source group `vault-taste/taste-skill/`. Only the original `taste-skill` v2 (experimental) leaf was imported, **not the other 12 skills in that repository**. It joins Jev `emil` / visible shim `ui-craft` for aesthetic direction of landing pages, portfolios and redesigns. The source excludes dense dashboards, admin panels, and multi-step forms.
 - Skillshare's first Jevify install was **blocked by two CRITICAL prompt-injection matches** in quoted adversarial evaluation examples (`assets/question-cases.json:36`, `references/worked-question-pack.md:106`). After examining both excerpts, those two specific finding records were accepted through a reviewed `--force` import. Audit also reported a HIGH synthetic-key assignment in `scripts/test_jev_client.py` and lower-severity URL/command findings. The global CRITICAL threshold was **not** changed; an acceptance is not proof that all scripts are safe.
-- Taste imported under the normal audit policy with two HIGH findings (`SKILL.md:133` DNS heuristic and `SKILL.md:892` agent directive heuristic) and an INFO interpreter warning. These were not blocking and remain visible for review.
-- `vault-*` exclusions already protect all seven targets. Aegis remains canonical. Updating uses `skillshare update --group vault-taste -g` for Taste and `skillshare update jevify -g` for Jevify, with dry-run, audit, test and Git backup.
+- `vault-*` exclusions already protect all seven targets. Aegis remains canonical. Updating uses `skillshare update jevify -g` for Jevify, with dry-run, audit, test and Git backup.
 
 **Jevify TypeSafe environment:** See [Jevify TypeSafe setup](typesafe-api.md). The login shell exports both `JEV_API_KEY` and `TYPESAFE_API_KEY` with the same value, using one key declaration in `~/.bashrc`. Jevify helpers may run directly. Launch agents with the normal login-shell TypeSafe environment; no separate wrapper is installed. No key value is committed to the project or Skillshare source. After updates, recheck the local skill note.
 

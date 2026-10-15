@@ -50,10 +50,9 @@
     "emil": {
       "roots": [
         "~/.config/skillshare/skills/vault-emil",
-        "~/.config/skillshare/skills/vault-lassejlv/no-vibe-code",
-        "~/.config/skillshare/skills/vault-taste/taste-skill"
+        "~/.config/skillshare/skills/vault-lassejlv/no-vibe-code"
       ],
-      "description": "17 UI design, testing, and aesthetic skills"
+      "description": "16 UI design, testing, and aesthetic skills"
     },
     "sentry": {
       "roots": [

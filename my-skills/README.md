@@ -8,7 +8,7 @@ This folder is the **maintainer's example configuration and operating notebook**
 2. **JevShelf + TypeSafe Jev** keep occasional specialist skills behind five visible domain shims, selecting and loading only the relevant leaf when needed.
 3. **Aegis** is my one canonical engineering process. Matt Pocock and Addy Osmani are evaluated alternatives that remain uninstalled.
 4. **Codex, Pi and other configured agents** receive consistent visible Skillshare shims (with existing host-specific exclusions). The model decides whether to invoke a domain shim; JevShelf does not force host calls.
-5. **A private, change-based Git backup** protects installed skills, metadata and target configuration. The complete local backup checkout lives at `~/repo/my-skills-backup/`; it is never published to the public JevShelf repository.
+5. **A private, change-based Git backup** protects installed skills, metadata and target configuration. The backup lives in a separate private repository; it is never published to the public JevShelf repository.
 
 ## Current Skillshare library
 
@@ -24,14 +24,13 @@ This folder is the **maintainer's example configuration and operating notebook**
 | Emil UI | 15 | Jev-only |
 | Sentry specialist tools | 4 | Jev-only |
 | lassejlv additions | 3 | Jev-only |
-| Taste frontend aesthetics | 1 | Jev-only |
 | Matt Pocock curated specialists | 13 | Jev-only (not a second engineering lifecycle) |
 | Addy Osmani curated specialists | 7 | Jev-only (not a second engineering lifecycle) |
 | ASD-STE100 technical writing | 1 | Jev-only |
 | Danium lateral-thinking toolkit | 9 | Jev-only (8 techniques + router) |
-| **Total in Skillshare source** | **105** | **47 visible source skills + 58 hidden leaf skills** |
+| **Total in Skillshare source** | **104** | **47 visible source skills + 57 hidden leaf skills** |
 
-The eight routed collections are **Marketing 50, Critical Thinking 28, Lateral Thinking 9, Decision & Reflection 6, Academic 5, UI 17, Code Specialists 16, and Writing 6**. The former 43-skill Thinking collection is divided into three independently routed domains; see [the thinking collection map](thinking-collections.md). Marketing and Critical Thinking use read-only upstream checkouts, while additional specialist leaves are held in hidden Skillshare `vault-*` groups. Agents discover only the domain entry points.
+The eight routed collections are **Marketing 50, Critical Thinking 28, Lateral Thinking 9, Decision & Reflection 6, Academic 5, UI 16, Code Specialists 16, and Writing 6**. The former 43-skill Thinking collection is divided into three independently routed domains; see [the thinking collection map](thinking-collections.md). Marketing and Critical Thinking use read-only upstream checkouts, while additional specialist leaves are held in hidden Skillshare `vault-*` groups. Agents discover only the domain entry points.
 
 **Current full list:** [installed.md](installed.md) and [machine-readable installed.csv](installed.csv). The inventory also catalogs all 38 Matt Pocock and 25 Addy Osmani skills: **13 Matt and 7 Addy specialists are hidden Jev leaves**, while their full engineering systems remain inactive.
 
@@ -66,15 +65,3 @@ Skillshare **v0.25.5** is installed as of 12 October 2026. Keeping it current is
 - [reference skills](references.md): **Distilly** — reserved for opt-in, consent-based Person Profiles, **not installed**.
 - **Haft** — considered for long-term engineering decision memory; **not installed**.
 - **No Yak Shaving** — reviewed, useful optional proportionality advice; **not installed**.
-
-## Private backup repository
-
-**[My Skills Backup](https://github.com/ham-zax/my-skills-backup)** is private, with the working checkout in `~/repo/my-skills-backup/`. See [backups.md](backups.md) for change detection, deduplication, WSL timing and restoration.
-
-```bash
-bash scripts/backup-skillshare.sh           # Check now; commit and push only changes
-bash scripts/backup-skillshare.sh --if-due  # Skip when a check succeeded within 48h
-systemctl --user status jevshelf-backup.timer
-```
-
-The passive timer runs a one-shot backup five minutes after WSL's user systemd session starts and approximately every 48 hours while running. It consumes no application RAM between jobs. No new Git commit or push happens when the backup is already current.

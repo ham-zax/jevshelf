@@ -70,30 +70,4 @@ ln -s "$(pwd)/bin/jevshelf" ~/.local/bin/jevshelf
 
 ## 4. Keep it maintainable and recoverable
 
-Skillshare manages updates and host sync. To snapshot your source and configuration into a **private** Git repository, first create your own private GitHub repository, then supply it during the first backup:
-
-```bash
-# Example remote; substitute your own PRIVATE repository URL.
-JEVSHELF_BACKUP_REMOTE=https://github.com/YOUR-ACCOUNT/my-skills-backup.git \
-  bash scripts/backup-skillshare.sh
-```
-
-The script creates or reuses a local Git checkout at `~/repo/my-skills-backup/` by default (override with `JEVSHELF_BACKUP_CHECKOUT`). It copies current Skillshare skill files, metadata and selected config while excluding the original source's `.git`, common credential files, and backup archives (`*.bundle`, `*.tar`, `*.tar.gz`, `*.tgz`, `*.zip`, as files or directories, anywhere in the source tree). It creates an incremental Git commit **only on actual changes**, and pushes only if a new commit is pending. If an upload fails, it is retried during a later invocation.
-
-Before any push, **every** effective push destination is verified: separate or additional pushurls and Git `url.*.insteadOf`/`pushInsteadOf` rewrites are resolved, and each resulting URL must be a `github.com` repository over HTTPS (`https://github.com/owner/repo`), scp-like SSH (`git@github.com:owner/repo`), or `ssh://` (`ssh://git@github.com/owner/repo`) that `gh` reports as `PRIVATE` when queried at its explicit `https://github.com/owner/repo` URL (never a short name that `GH_HOST` could redirect). Any other destination, any non-private repository, or any failed verification aborts the push; an unchanged, already-synchronized checkout uses no network at all. Only these GitHub forms are verified — no privacy claim is made for other hosts. A push is likewise refused when unpushed local commits still contain archive files (see `my-skills/backups.md` for manual recovery); the script never rewrites published history itself.
-
-```bash
-bash scripts/backup-skillshare.sh          # Force a check now; skip unchanged commits
-bash scripts/backup-skillshare.sh --if-due # Respect the 48-hour throttle
-```
-
-On Linux/WSL with user systemd, install the passive scheduler:
-
-```bash
-bash scripts/install-backup-timer.sh
-systemctl --user list-timers jevshelf-backup.timer
-```
-
-This is **not an always-on daemon**. A short `Type=oneshot` job runs approximately **five minutes after WSL's user systemd starts** and at 48-hour intervals while it remains running. It exits after checking. No job executes while WSL is stopped, and changes are not copied continuously. On a future WSL start it checks again after the delay. The background timer itself uses systemd's normal scheduling, not resident application memory.
-
-**Backup storage:** The local Git checkout is in `~/repo/my-skills-backup/`; the GitHub repository must remain private. The backup's *snapshot history* is Git commits, not repeated compressed archives. The source's original `.git` history is not replicated; retain it separately if that is needed.
+Skillshare manages updates and host sync. JevShelf does not back up your skills. Keep your Skillshare source in Git and push it to a **private** repository if you need an off-machine copy.

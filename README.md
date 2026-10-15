@@ -8,7 +8,7 @@
 
 JevShelf **v0.2.0** uses only its own CLI and explicit collection manifests: no old command aliases or implicit personal skill defaults.
 
-[Get started](docs/quickstart.md) · [How it works](docs/architecture.md) · [My Skills](my-skills/README.md) · [Backup guide](my-skills/backups.md)
+[Get started](docs/quickstart.md) · [How it works](docs/architecture.md) · [My Skills](my-skills/README.md)
 
 </div>
 
@@ -64,23 +64,7 @@ See the walkthrough for prerequisites, target exclusions and ensuring the `jevsh
 - **Two retrieval options:** local lexical/BM25 matching, or semantic TypeSafe Jev selection. Search results are metadata; full skill text is not returned until a separate load.
 - **Bounded reads:** file checks, paths and SHA-256 content continuity reject stale skill selections and limit unnecessary instruction loading.
 - **Host neutrality:** one portable CLI and ordinary `SKILL.md` shims; let Skillshare deliver links to supported target folders.
-- **Backup and recovery:** a command that mirrors the current Skillshare source and config into a private, deduplicated Git repository, committing and pushing only when files change. Optional one-shot WSL/systemd checks every 48 hours or after startup.
 - **No new process framework:** JevShelf chooses specialist instructions; it doesn't impose TDD, ticket formats, agents, commits, or lifecycle steps on your engineering workflow.
-
-**Backup now:**
-
-```bash
-bash scripts/backup-skillshare.sh
-```
-
-**Automatic, approximately every other day (Linux/WSL with systemd user services):**
-
-```bash
-bash scripts/install-backup-timer.sh
-systemctl --user status jevshelf-backup.timer
-```
-
-The timer is **not a resident service**: it launches a one-shot check five minutes after WSL starts, then approximately every 48 hours while running. Only changed files generate a Git commit and private push; an unchanged check exits without uploading. Your private local Git checkout can live in `~/repo/my-skills-backup/`. See [the quickstart](docs/quickstart.md#4-keep-it-maintainable-and-recoverable).
 
 ## Product vs. My Skills
 
@@ -92,8 +76,8 @@ This repository intentionally contains **two separate things**:
 | Install | `scripts/bootstrap.sh` + `jevshelf init` | Opt-in `my-skills/collections.json` and existing Skillshare source |
 | Collections | Any names and any source directories | Marketing, Critical Thinking, Lateral Thinking, Decision & Reflection, Academic, UI, Code Specialists, Writing |
 | Engineering method | **None required** | Aegis active; Matt / Addy available for swap |
-| Storage | Your own local directories | My Skillshare source Git and private `~/repo/my-skills-backup/` snapshot repository |
-| Support docs | [Quickstart](docs/quickstart.md), [architecture](docs/architecture.md) | [Installed catalog](my-skills/installed.md), [favorites](my-skills/references.md), [swap instructions](my-skills/prompts/swap-engineering-system.md), [backups](my-skills/backups.md), [specialists](my-skills/engineering-specialists.md) |
+| Storage | Your own local directories | My Skillshare source Git |
+| Support docs | [Quickstart](docs/quickstart.md), [architecture](docs/architecture.md) | [Installed catalog](my-skills/installed.md), [favorites](my-skills/references.md), [swap instructions](my-skills/prompts/swap-engineering-system.md), [specialists](my-skills/engineering-specialists.md) |
 
 The personal [Thinking collection map](my-skills/thinking-collections.md) shows how 43 previously grouped skills are now separated into three focused domains (28 analytical, 9 lateral, 6 decision/reflection).
 

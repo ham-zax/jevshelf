@@ -19,6 +19,7 @@ from .selection import Router, VERIFICATION_CANDIDATES
 
 
 MAX_JEV_RESULTS = 3
+JEV_MODEL = "jev-preview"
 
 
 def _config_file() -> Path:
@@ -238,7 +239,13 @@ def _jev_search(name: str, task: str, context: str, max_results: int) -> dict:
         raise RouterError(f"Jev supports at most {MAX_JEV_RESULTS} selected skills per search")
 
     root = _collection_root(name)
-    config = Config(roots=_collection_roots(name), mode="live", max_skills=max_results, shortlist=VERIFICATION_CANDIDATES)
+    config = Config(
+        roots=_collection_roots(name),
+        model=JEV_MODEL,
+        mode="live",
+        max_skills=max_results,
+        shortlist=VERIFICATION_CANDIDATES,
+    )
     router = Router(config)
     started = time.perf_counter()
     budget = RequestBudget(
@@ -380,7 +387,12 @@ def _plan(args: argparse.Namespace) -> dict:
     if not args.task.strip():
         raise RouterError("task must be nonempty text")
     root = _collection_root(args.collection)
-    router = Router(Config(roots=_collection_roots(args.collection), mode="live", shortlist=VERIFICATION_CANDIDATES))
+    router = Router(Config(
+        roots=_collection_roots(args.collection),
+        model=JEV_MODEL,
+        mode="live",
+        shortlist=VERIFICATION_CANDIDATES,
+    ))
     try:
         return {"collection": args.collection, **router.plan(args.task, args.context)}
     finally:

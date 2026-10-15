@@ -29,7 +29,6 @@ HIDDEN_GROUPS = {
     "vault-emil/": "emil-hidden",
     "vault-sentry/": "sentry-hidden",
     "vault-lassejlv/": "lassejlv-hidden",
-    "vault-taste/": "taste-hidden",
     "vault-matt-review/": "matt-specialist-hidden",
     "vault-addy-review/": "addy-specialist-hidden",
     "vault-writing/": "writing-hidden",
@@ -155,7 +154,7 @@ def build_rows() -> list[dict[str, str]]:
             })
 
     return sorted(rows, key=lambda x: (
-        ["baseline", "aegis", "academic-hidden", "emil-hidden", "sentry-hidden", "lassejlv-hidden", "taste-hidden", "matt-specialist-hidden", "addy-specialist-hidden", "writing-hidden", "lateral-hidden", "matt", "addy"].index(x["collection"]), x["skill"]
+        ["baseline", "aegis", "academic-hidden", "emil-hidden", "sentry-hidden", "lassejlv-hidden", "matt-specialist-hidden", "addy-specialist-hidden", "writing-hidden", "lateral-hidden", "matt", "addy"].index(x["collection"]), x["skill"]
     ))
 
 
@@ -185,7 +184,7 @@ def main() -> None:
         f"- **Current canonical engineering system:** {title[active[0]] if active else 'none'}",
         f"- **Installed Skillshare source entries:** {sum(counts.values()) + sum(hidden.values())}",
         f"- **Visible/source skills:** {sum(counts.values())} (includes 17 original, 23 Aegis, 6 additional domain shims, and jevify)",
-        f"- **Managed hidden Jev leaves:** {sum(hidden.values())} (Academic {hidden['academic-hidden']}, Emil {hidden['emil-hidden']}, Sentry {hidden['sentry-hidden']}, lassejlv {hidden['lassejlv-hidden']}, Taste {hidden['taste-hidden']}, Matt specialists {hidden['matt-specialist-hidden']}, Addy specialists {hidden['addy-specialist-hidden']}, Writing STE {hidden['writing-hidden']}, Lateral {hidden['lateral-hidden']})",
+        f"- **Managed hidden Jev leaves:** {sum(hidden.values())} (Academic {hidden['academic-hidden']}, Emil {hidden['emil-hidden']}, Sentry {hidden['sentry-hidden']}, lassejlv {hidden['lassejlv-hidden']}, Matt specialists {hidden['matt-specialist-hidden']}, Addy specialists {hidden['addy-specialist-hidden']}, Writing STE {hidden['writing-hidden']}, Lateral {hidden['lateral-hidden']})",
         f"- **Aegis:** {counts['aegis']} installed of {sources['aegis']} available",
         f"- **Matt Pocock:** {counts['matt']} installed of {sources['matt']} available; 27 were in the inspected official plugin",
         f"- **Addy Osmani:** {counts['addy']} installed of {sources['addy']} available",

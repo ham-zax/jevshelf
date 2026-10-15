@@ -57,11 +57,7 @@ Before global mutations, inspect both Git trees and make a source checkpoint if 
 ```bash
 git -C ~/repo/jevshelf status --short
 git -C ~/.config/skillshare/skills status --short
-cd ~/repo/jevshelf
-bash scripts/backup-skillshare.sh
 ```
-
-The backup script requires a clean committed Skillshare source and makes a Git bundle of its actual contents and a snapshot of `~/.config/skillshare/config.yaml`. A target-folder backup alone cannot recover source files backed by merge-mode symlinks.
 
 For a **routed** global skill, substitute the actual source and specific leaf names:
 
@@ -86,7 +82,6 @@ The standard routed groups are:
 | `vault-emil/` | `ui-craft` | `emil` |
 | `vault-sentry/` | `code-specialists` | `sentry` |
 | `vault-lassejlv/` | **No additional shim** | Selected source skills are merged into `emil` or `sentry` by explicit allowlist |
-| `vault-taste/` | **No additional shim** | `design-taste-frontend` is included in `emil` / `ui-craft` |
 | `vault-matt-review/` | `jevshelf-decision-reflection`, `code-specialists`, `jevshelf-writing` | Curated on-demand Matt skills only; full Matt engineering pack stays inactive |
 | `vault-addy-review/` | Existing `code-specialists` | Seven narrow Addy specialists only; full Addy engineering pack stays inactive |
 | `vault-writing/` | New `jevshelf-writing` | danyuchn ASD-STE100 technical-English skill only |
@@ -105,7 +100,7 @@ The CLI uses `_collection_roots` in `src/jevshelf/cli.py` to build a collection 
 - Run focused existing project tests when implementation code changed; use a stronger integration test when the changed behavior warrants it. Do not impose blanket TDD.
 - Run `skillshare sync --dry-run -g` and inspect changes, then `skillshare sync -g`. Verify allowed direct shims appeared and **no `vault-*` leaves** appeared in any target directory.
 - Refresh `my-skills/installed.csv` and `my-skills/installed.md` with `python3 my-skills/scripts/refresh-inventory.py`, and update `my-skills/vault-management.md` with any new group, limitations, findings, and provenance.
-- Commit only intended changes to the **project repository** and the **Skillshare source Git repository**, separately; no push without a user request. After Skillshare source commit, run `bash scripts/backup-skillshare.sh` and `git bundle verify`. The bundle must include the hidden leaves, not just the target symlinks.
+- Commit only intended changes to the **project repository** and the **Skillshare source Git repository**, separately; no push without a user request.
 
 ### 5. Report the result and stop
 
@@ -118,4 +113,4 @@ Report: source and exact names, selected scope and Jev collection, installation/
 - **`no-yak-shaving`:** worthwhile but overlaps Aegis and existing Codex principles. **Not automatically installed**. If later requested, treat as opt-in implementation/review advice rather than another mandatory lifecycle owner.
 - **`create-ui-kit-from-website` and `project-roadmap`:** optional, not approved for automatic installation.
 
-- **Jevify** (`altryne/jevify`) is an approved **direct global skill**; it supplies Jev usage patterns and helpers but is not itself a second router. **Taste** (`Leonxlnx/taste-skill/skills/taste-skill`) is an approved **Jev-hidden UI skill**, not a second global shim.
+- **Jevify** (`altryne/jevify`) is an approved **direct global skill**; it supplies Jev usage patterns and helpers but is not itself a second router.

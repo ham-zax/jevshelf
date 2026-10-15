@@ -25,7 +25,7 @@ def configure_collection(name: str, roots: list[Path], **extra) -> None:
 
 def configure_vault(source: Path) -> None:
     configure_collection("academic", [source / "vault-academic"])
-    configure_collection("emil", [source / "vault-emil", source / "vault-lassejlv/no-vibe-code", source / "vault-taste/taste-skill"])
+    configure_collection("emil", [source / "vault-emil", source / "vault-lassejlv/no-vibe-code"])
     configure_collection("sentry", [source / f"vault-sentry/{name}" for name in (
         "find-bugs", "code-simplifier", "security-review", "skill-scanner"
     )] + [source / "vault-lassejlv/backend-security-audit", source / "vault-lassejlv/minimize-api-responses"])
@@ -355,31 +355,6 @@ def test_lassejlv_specialists_merge_into_existing_jev_collections(tmp_path, monk
         assert code == 0
         assert loaded["name"] == name
         assert "Skillshare-managed specialist guidance." in loaded["content"]
-
-
-def test_taste_skill_joins_ui_collection_without_new_native_leaf(tmp_path, monkeypatch, capsys):
-    src = tmp_path / 'skillshare'
-    configure_vault(src)
-    write_skill(src / 'vault-emil', 'animate', 'animate',
-                'Add meaningful web animation.', 'Existing UI library.')
-    write_skill(src / 'vault-lassejlv', 'no-vibe-code', 'no-vibe-code',
-                'Inspect generic visual patterns.', 'Existing quality guide.')
-    write_skill(src / 'vault-taste', 'taste-skill', 'design-taste-frontend',
-                'Design distinctive premium landing pages and brand-focused portfolio redesigns.',
-                'Taste design direction.')
-    code, info = invoke(capsys, ['collections'])
-    assert code == 0
-    assert info['collections']['emil']['skills'] == 3
-    code, found = invoke(capsys, ['search', '--collection', 'emil', '--mode', 'lexical',
-                                   '--task', 'premium landing page brand direction', '--max-results', '3'])
-    assert code == 0
-    skill = next(s for s in found['selected'] if s['name'] == 'design-taste-frontend')
-    assert skill['source'] == 'root2:SKILL.md'
-    code, loaded = invoke(capsys, ['load', '--collection', 'emil', '--id', skill['id'],
-                                    '--expected-digest', skill['digest']])
-    assert code == 0
-    assert loaded['name'] == 'design-taste-frontend'
-    assert 'Taste design direction.' in loaded['content']
 
 
 def test_user_manifest_is_independent_and_labels_mixed_roots(tmp_path, monkeypatch, capsys):

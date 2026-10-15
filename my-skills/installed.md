@@ -5,9 +5,9 @@ Regenerate with: python3 my-skills/scripts/refresh-inventory.py (requires Skills
 The companion CSV is the complete row-level ledger.
 
 - **Current canonical engineering system:** Aegis
-- **Installed Skillshare source entries:** 105
+- **Installed Skillshare source entries:** 104
 - **Visible/source skills:** 47 (includes 17 original, 23 Aegis, 6 additional domain shims, and jevify)
-- **Managed hidden Jev leaves:** 58 (Academic 5, Emil 15, Sentry 4, lassejlv 3, Taste 1, Matt specialists 13, Addy specialists 7, Writing STE 1, Lateral 9)
+- **Managed hidden Jev leaves:** 57 (Academic 5, Emil 15, Sentry 4, lassejlv 3, Matt specialists 13, Addy specialists 7, Writing STE 1, Lateral 9)
 - **Aegis:** 23 installed of 23 available
 - **Matt Pocock:** 0 installed of 38 available; 27 were in the inspected official plugin
 - **Addy Osmani:** 0 installed of 25 available
@@ -20,8 +20,8 @@ The companion CSV is the complete row-level ledger.
 | baseline | archify | local |
 | baseline | arm-webharness | local |
 | baseline | cachebeat | local |
-| baseline | claive-orchestration | local |
-| baseline | claive-routing-codex | local |
+| baseline | claive-orchestration | local (path redacted) |
+| baseline | claive-routing-codex | local (path redacted) |
 | baseline | code-specialists | jevshelf:shims/code-specialists |
 | baseline | codebase-memory | local |
 | baseline | find-skills | local |
@@ -95,7 +95,6 @@ The companion CSV is the complete row-level ledger.
 | lassejlv-hidden | vault-lassejlv__backend-security-audit |
 | lassejlv-hidden | vault-lassejlv__minimize-api-responses |
 | lassejlv-hidden | vault-lassejlv__no-vibe-code |
-| taste-hidden | vault-taste__taste-skill |
 | matt-specialist-hidden | vault-matt-review__codebase-design |
 | matt-specialist-hidden | vault-matt-review__domain-modeling |
 | matt-specialist-hidden | vault-matt-review__grill-with-docs |

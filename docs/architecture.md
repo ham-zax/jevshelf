@@ -41,7 +41,7 @@ The host supplies a neutral current question and a concise situation brief: prod
 
 Jev ranks collection metadata, then verifies up to six candidates per ranking batch with independent applicability and usefulness questions. Verification considers the supplied task/context and bounded source excerpts containing capability and exclusion sections when available. Excerpts retain the 900-character default and conservative JSON-byte preflight bound; they are samples, not complete documents. The host digest-loads any selected skill before applying its instructions. Final recommendations remain capped at three and can be fewer or empty. Six is an initial coverage setting, not a measured optimum.
 
-These JevShelf-specific judgments and excerpts live in tracked `src/jevshelf/selection.py`; the pinned upstream router still owns transport, retries, request/time limits, ranking, statuses and usage accounting. Search and dry planning use the same six-candidate setting. The ignored dependency checkout is not patched.
+These JevShelf-specific judgments and excerpts live in tracked `src/jevshelf/selection.py`; the CLI selects `jev-preview` for live search and plan output. The pinned upstream router still owns transport, retries, request/time limits, ranking, statuses and usage accounting. Search and plan output use the same six-candidate setting. The ignored dependency checkout is not patched.
 
 Lexical mode resolves an exact normalized skill name locally; other queries retain metadata BM25. Exact matches do not fill spare result slots with unrelated skills. Lexical results are explicitly labeled and never silently substitute for Jev errors, uncertainty or no-match. There is no automatic hybrid or embedding retrieval.
 

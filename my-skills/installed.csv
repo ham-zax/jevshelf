@@ -3,8 +3,8 @@ baseline,academic-research,installed,academic-research,jevshelf:shims/academic-r
 baseline,archify,installed,archify,local,archify,Existing skill; preserve during engineering swaps
 baseline,arm-webharness,installed,arm-webharness,local,arm-webharness,Existing skill; preserve during engineering swaps
 baseline,cachebeat,installed,cachebeat,local,cachebeat,Existing skill; preserve during engineering swaps
-baseline,claive-orchestration,installed,claive-orchestration,local,claive-orchestration,Existing skill; preserve during engineering swaps
-baseline,claive-routing-codex,installed,claive-routing-codex,local,claive-routing-codex,Existing skill; preserve during engineering swaps
+baseline,claive-orchestration,installed,claive-orchestration,local (path redacted),claive-orchestration,Existing skill; preserve during engineering swaps
+baseline,claive-routing-codex,installed,claive-routing-codex,local (path redacted),claive-routing-codex,Existing skill; preserve during engineering swaps
 baseline,code-specialists,installed,code-specialists,jevshelf:shims/code-specialists,code-specialists,Existing skill; preserve during engineering swaps
 baseline,codebase-memory,installed,codebase-memory,local,codebase-memory,Existing skill; preserve during engineering swaps
 baseline,find-skills,installed,find-skills,local,find-skills,Existing skill; preserve during engineering swaps
@@ -73,7 +73,6 @@ sentry-hidden,skill-scanner,managed-hidden,vault-sentry__skill-scanner,github.co
 lassejlv-hidden,backend-security-audit,managed-hidden,vault-lassejlv__backend-security-audit,github.com/lassejlv/skills/skills/backend-security-audit,vault-lassejlv/backend-security-audit,Skillshare manages/updates; excluded from all agent targets; Jev-only
 lassejlv-hidden,minimize-api-responses,managed-hidden,vault-lassejlv__minimize-api-responses,github.com/lassejlv/skills/skills/minimize-api-responses,vault-lassejlv/minimize-api-responses,Skillshare manages/updates; excluded from all agent targets; Jev-only
 lassejlv-hidden,no-vibe-code,managed-hidden,vault-lassejlv__no-vibe-code,github.com/lassejlv/skills/skills/no-vibe-code,vault-lassejlv/no-vibe-code,Skillshare manages/updates; excluded from all agent targets; Jev-only
-taste-hidden,taste-skill,managed-hidden,vault-taste__taste-skill,github.com/Leonxlnx/taste-skill/skills/taste-skill,vault-taste/taste-skill,Skillshare manages/updates; excluded from all agent targets; Jev-only
 matt-specialist-hidden,codebase-design,managed-hidden,vault-matt-review__codebase-design,github.com/mattpocock/skills/skills/engineering/codebase-design,vault-matt-review/codebase-design,Skillshare manages/updates; excluded from all agent targets; Jev-only
 matt-specialist-hidden,domain-modeling,managed-hidden,vault-matt-review__domain-modeling,github.com/mattpocock/skills/skills/engineering/domain-modeling,vault-matt-review/domain-modeling,Skillshare manages/updates; excluded from all agent targets; Jev-only
 matt-specialist-hidden,grill-with-docs,managed-hidden,vault-matt-review__grill-with-docs,github.com/mattpocock/skills/skills/engineering/grill-with-docs,vault-matt-review/grill-with-docs,Skillshare manages/updates; excluded from all agent targets; Jev-only
