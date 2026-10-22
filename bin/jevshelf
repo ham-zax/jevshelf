@@ -5,6 +5,12 @@ ROOT="$(cd -- "$(dirname -- "$SCRIPT_PATH")/.." && pwd -P)"
 CLI="$ROOT/.venv/bin/jevshelf"
 if [[ ! -x "$CLI" ]]; then
   echo 'JevShelf environment missing; run bash scripts/bootstrap.sh' >&2
+  # bootstrap.sh installs only into .venv; report any other .venv* left without the CLI.
+  for venv in "$ROOT"/.venv*/; do
+    if [[ -d "$venv" && "$venv" != "$ROOT/.venv/" && ! -x "${venv}bin/jevshelf" ]]; then
+      echo "Partial venv without the JevShelf CLI: ${venv%/} (bootstrap.sh does not use it)" >&2
+    fi
+  done
   exit 127
 fi
 # Some agent hosts do not inherit login-shell API credentials.
